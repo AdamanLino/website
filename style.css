@@ -1,0 +1,35 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.nav ul {
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: blue;
+    height: 25px;
+    list-style-type: none;
+}
+
+.nav a {
+    color: yellow;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: green;
+}
+
+body {
+    background-image: url(/assets/imgs/background.png);
+    background-size: cover;
+}
+
+.texto{
+    color: white;
+    background-image: url(/assets/imgs/background-text.jpg);
+    background-size: auto;
+    border: none;
+    border-radius: 15px;
+}
