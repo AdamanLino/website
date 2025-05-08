@@ -37,6 +37,10 @@ body {
     /* box-shadow: black; */
 }
 
+.caixa_cadastro li:hover {
+    background-color: red;
+}
+
 .caixa_cadastro li {
     color: white;
 }
@@ -65,8 +69,10 @@ a {
     text-decoration: none;
 }
 
+
 .nav a:hover {
     color: white;
+    /* background-color: #01183a; */
     font-size: 20px;
     scale: 1.1;
 
@@ -75,7 +81,8 @@ a {
 
 /* body */
 body {
-    background-image: url(./assets/imgs/background.png);
+    /* background-image: url(./assets/imgs/background.png); */
+    background-color: #04367d;
     background-size: cover;
 }
 
@@ -89,15 +96,31 @@ body {
     border-radius: 15px;
 }
 
+/* TELA CADASTRO */
 .cadastro {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    flex-direction: column;
 
-    width: 100px;
+    background-color: #064BAE;
+    color: white;
+    border-color: #01183a;
+    border: 2px solid #01183a;
+    border-radius: 10px;
+
+    font-size: 20px;
+    margin: 0 auto;
+    height: 330px;
+    width: 400px;
 }
 
-.cadastro .container {
-    text-align: center;
+.cadastro p {
+    margin-bottom: 2px;
+}
+
+.cadastro input {
+    width: 50%;
+    border: none;
+    border-radius: 2px;
 }
