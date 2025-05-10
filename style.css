@@ -37,10 +37,6 @@ body {
     /* box-shadow: black; */
 }
 
-.caixa_cadastro li:hover {
-    background-color: red;
-}
-
 .caixa_cadastro li {
     color: white;
 }
@@ -58,6 +54,7 @@ body {
     list-style-type: none;
 
     margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 a {
@@ -88,6 +85,7 @@ body {
 
 .texto {
     padding: 6px;
+    margin-top: 15px;
     text-align: justify;
     color: white;
     background-image: url(./assets/imgs/background-text.jpg);
@@ -105,14 +103,24 @@ body {
 
     background-color: #064BAE;
     color: white;
-    border-color: #01183a;
     border: 2px solid #01183a;
     border-radius: 10px;
 
     font-size: 20px;
     margin: 0 auto;
-    height: 330px;
-    width: 400px;
+    margin-top: 5px;
+    height: 565px;
+    width: 420px;
+}
+
+.cadastro img {
+    width: 150px;
+    height: 180px;
+}
+
+.cadastro span {
+    text-align: center;
+    font-size: 14px;
 }
 
 .cadastro p {
@@ -123,4 +131,125 @@ body {
     width: 50%;
     border: none;
     border-radius: 2px;
+}
+
+.cadastro input {
+    resize: 10px;
+}
+
+.cadastro button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border: none;
+    width: 85px;
+    height: 70px;
+    color: white;
+}
+
+.cadastro button:hover {
+    cursor: pointer;
+}
+
+/* TELA LOGIN */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #064BAE;
+    color: white;
+    border: 2px solid #01183a;
+    border-radius: 10px;
+
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 5px;
+    height: 500px;
+    width: 420px;
+}
+
+.login img {
+    width: 150px;
+    height: 200px;
+}
+
+.login span {
+    text-align: center;
+    font-size: 14px;
+}
+
+.login p {
+    margin-bottom: 2px;
+}
+
+.login input {
+    width: 50%;
+    border: none;
+    border-radius: 2px;
+}
+
+.login input {
+    resize: 10px;
+}
+
+.login button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border: none;
+    width: 20%;
+    height: 35px;
+    color: white;
+}
+
+.login button:hover {
+    cursor: pointer;
+}
+
+.login a {
+    color: #01183a;
+}
+
+/* TELA DE DASHBOARD */
+
+.sidebar {
+    background-color: #01183a;
+    height: 100%;
+    width: 190px;
+    top: 0;
+
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar img {
+    height: 108px;
+    width: 108px;
+    border: 2px solid black;
+    margin-top: 10px;
+}
+
+.sidebar p {
+    margin-top: 4px;
+    margin-bottom: 60px;
+    color: white;
+    font-size: 20px;
+}
+
+.botao-sidebar-selecionado {
+    padding: 6px;
+    background-color: #04367d;
+}
+
+.container-dashboard {
+    margin-left: 190px;
+    background-color: purple;
+}
+
+.container-dashboard p {
+    margin: 0px;
 }
