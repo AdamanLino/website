@@ -7,6 +7,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../website/assets/imgs/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -22,16 +23,62 @@
 
         <div class="botao-sidebar">
             <a href="dashboard-questionario.html">
-                <p>Questionarios</p>
+                <p>Questionários</p>
             </a>
         </div>
     </div>
 
-    <div class="container-dashboard">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum ex voluptatum cumque quaerat deserunt ab
-            perspiciatis aliquid, explicabo quia eaque quas praesentium mollitia architecto, in odit earum voluptates
-            dicta tempora.</p>
+    <div class="dashboard-header">
+        <div class="botao-sair-dash">
+            <p>DASHBOARD - TELA DE MONITORAMENTO</p>
+            <p>Sair</p>
+        </div>
     </div>
+
+    <div class="kpi-dash">
+        <div class="caixa-1">
+
+        </div>
+        <div class="caixa-2">
+
+        </div>
+        <div class="caixa-3">
+
+        </div>
+    </div>
+
+    <!-- GRÁFICOS -->
+    <div class="graficos">
+        <div class="pizza">
+            <div class="header-pizza">Header</div>
+        </div>
+        <canvas id="graficoPizza">
+    </canvas>
+    </div>
+
 </body>
 
 </html>
+<script>
+    const graficoPizza = document.getElementById('graficoPizza');
+
+    new Chart(graficoPizza, {
+        type: 'pie',
+        data: {
+            labels: ['Thread 1', 'Thread 2', 'Thread 3'],
+            datasets: [{
+                label: 'Quantidade de Respostas',
+                data: [12, 19, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>

@@ -235,21 +235,43 @@ body {
 
 .sidebar p {
     margin-top: 4px;
-    margin-bottom: 60px;
     color: white;
     font-size: 20px;
 }
 
 .botao-sidebar-selecionado {
     padding: 6px;
-    background-color: #04367d;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px black solid;
+    background-color: #064BAE;
+    margin-bottom: 4px;
 }
 
-.container-dashboard {
+.dashboard-header {
+    display: flex;
     margin-left: 190px;
     background-color: purple;
 }
 
-.container-dashboard p {
+.botao-sair-dash {
+    display: flex;
+    justify-content: space-around;
+    justify-content: flex-end;
+    background-color: red;
+    justify-content: flex-end;
+
+}
+
+.dashboard-header p {
     margin: 0px;
+}
+
+/* GRÁFICOS */
+
+.pizza {
+    width: 150px;
+    height: 180px;
+    background-color: palevioletred;
 }
