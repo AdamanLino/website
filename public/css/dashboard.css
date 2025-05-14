@@ -1,0 +1,78 @@
+/* TELA DE DASHBOARD */
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* BODY */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* SIDEBAR */
+.sidebar {
+    background-color: #01183a;
+    height: 100%;
+    width: 190px;
+    top: 0;
+
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar img {
+    height: 108px;
+    width: 108px;
+    border: 2px solid black;
+    margin-top: 10px;
+}
+
+.sidebar p {
+    margin-top: 4px;
+    color: white;
+    font-size: 20px;
+}
+
+.botao-sidebar-selecionado {
+    padding: 6px;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px black solid;
+    background-color: #064BAE;
+    margin-bottom: 4px;
+}
+
+.dashboard-header {
+    display: flex;
+    margin-left: 190px;
+    background-color: purple;
+}
+
+.botao-sair-dash {
+    display: flex;
+    justify-content: space-around;
+    justify-content: flex-end;
+    background-color: red;
+    justify-content: flex-end;
+
+}
+
+.dashboard-header p {
+    margin: 0px;
+}
+
+/* GRÁFICOS */
+
+.pizza {
+    width: 150px;
+    height: 180px;
+    background-color: palevioletred;
+}
+

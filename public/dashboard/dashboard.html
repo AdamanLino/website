@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="shortcut icon" href="../assets/imgs/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="../assets/imgs/logo.png" alt="logo.png">
+        <p>Dashboard</p>
+
+        <div class="botao-sidebar-selecionado">
+            <a href="dashboard.html">
+                <p>Monitoramento</p>
+            </a>
+        </div>
+
+        <div class="botao-sidebar">
+            <a href="dashboard-questionario.html">
+                <p>Questionários</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="dashboard-header">
+        <div class="botao-sair-dash">
+            <p>DASHBOARD - TELA DE MONITORAMENTO</p>
+            <p>Sair</p>
+        </div>
+    </div>
+
+    <div class="kpi-dash">
+        <div class="caixa-1">
+
+        </div>
+        <div class="caixa-2">
+
+        </div>
+        <div class="caixa-3">
+
+        </div>
+    </div>
+
+    <!-- GRÁFICOS -->
+    <div class="graficos">
+        <div class="pizza">
+            <div class="header-pizza">Header</div>
+        </div>
+        <canvas id="graficoPizza">
+    </canvas>
+    </div>
+
+</body>
+
+</html>
+<script>
+    const graficoPizza = document.getElementById('graficoPizza');
+
+    new Chart(graficoPizza, {
+        type: 'pie',
+        data: {
+            labels: ['Thread 1', 'Thread 2', 'Thread 3'],
+            datasets: [{
+                label: 'Quantidade de Respostas',
+                data: [12, 19, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>
