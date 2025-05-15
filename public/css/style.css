@@ -109,6 +109,7 @@ body {
     font-size: 20px;
     margin: 0 auto;
     margin-top: 5px;
+    margin-bottom: 15px;
     height: 565px;
     width: 420px;
 }
@@ -144,11 +145,33 @@ body {
     border: none;
     width: 85px;
     height: 70px;
-    color: white;
+    color: #01183a;
 }
 
 .cadastro button:hover {
     cursor: pointer;
+}
+
+.loading-div {
+    width: 50px;
+    display: none;
+}
+
+.loading-div img {
+    height: 50px;
+    width: 50px;
+}
+
+.card_erro {
+    display: none;
+    background-color: #fff;
+    color: black;
+    width: 230px;
+    position: fixed;
+    border-radius: 4px;
+    border: #ED145B 3px solid;
+    padding: 10px;
+    margin-right: 10%;
 }
 
 /* TELA LOGIN */
@@ -201,7 +224,7 @@ body {
     border: none;
     width: 20%;
     height: 35px;
-    color: white;
+    color: #01183a;
 }
 
 .login button:hover {
