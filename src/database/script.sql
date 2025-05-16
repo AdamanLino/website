@@ -9,13 +9,19 @@ create table permissao (
     constraint chk_tipo check (tipo in ('administrador', 'moderador', 'membro'))
 );
 
+-- insere as permissões na tabela
+insert into permissao (tipo) 
+	values('administrador'),
+	      ('moderador'),
+		  ('membro');
+
 create table usuario (
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     nome varchar(80) NOT NULL,
     email varchar(80) NOT NULL,
     senha varchar(80) NOT NULL,
-    dtCriacao datetime NOT NULL,
-    fkpermissao INT NOT NULL,
+    dtCriacao datetime NOT NULL DEFAULT(now()),
+    fkpermissao INT NOT NULL DEFAULT 3,
     FOREIGN KEY (fkpermissao) references permissao(id)
 );
 
@@ -51,13 +57,8 @@ create table enquete (
 );
 
 -- inserts
-insert into permissao (tipo) 
-	values('administrador'),
-	      ('moderador'),
-		  ('membro');
-
 insert into usuario (nome, email, senha, dtCriacao, fkpermissao) 
-	values('SonicDan', 'sonicdan@gmail.com', 'senhaSonic123', now(), 1), -- administrador
+	values('admin', 'admin@admin.com', 'admin', now(), 1), -- administrador
 		  ('TailsFan', 'tailsfan@outlook.com', 'senhaMariana123', now(), 2), -- moderador
 		  ('Gabriel Echidna', 'gabriel@gmail.com', 'senhaGabrie123', now(), 3), -- membro
 		  ('Ana Rose', 'ana@protonmail.me', 'senhaAna123', now(), 3), -- membro

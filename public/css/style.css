@@ -154,12 +154,12 @@ body {
 
 .loading-div {
     width: 50px;
-    display: none;
+    display: none
 }
 
 .loading-div img {
-    height: 50px;
-    width: 50px;
+    height: 20px;
+    width: 20px;
 }
 
 .card_erro {
@@ -232,5 +232,10 @@ body {
 }
 
 .login a {
+    text-decoration: underline;
     color: #01183a;
+}
+
+#div_erros_login {
+    display: none;
 }
