@@ -30,10 +30,12 @@ create table topico (
     email varchar(80),
     assunto varchar(100),
 	comentario varchar (280),
-    dtCriacao datetime,
+    dtCriacao datetime not null default(now()),
     fkusuario INT NOT NULL,
     FOREIGN KEY (fkusuario) references usuario(id)
 );
+
+select * from topico;
 
 create table mensagem (
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,

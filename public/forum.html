@@ -2,32 +2,47 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../public/assets/imgs/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/imgs/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fórum</title>
-
-    <link rel="stylesheet" href="./css/dashboards.css">
     <link rel="stylesheet" href="./css/style.css" />
-    <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
+    <script src="./js/sessao.js"></script>
+    <script src="./js/alerta.js"></script>
 </head>
 
 <body onload="validarSessao(), atualizarFeed()" style="background-color: #161618;">
+    <!-- HEADER -->
+    <header>
+        <div class="header">
+            <div class="logo">
+                <a href="index.html"><img src="./assets/imgs/logo.png" alt="logo"></a>
+            </div>
 
+            <div class="caixa_cadastro">
+                <a href="cadastro.html">
+                    <li>Cadastro</li>
+                </a>
+                <a href="login.html">
+                    <li>Login</li>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- DADOS DO USUÁRIO -->
     <div class="janela">
         <div class="header-left">
-            <h1>SFS</h1>
-
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
             </div>
 
             <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
+                <a href="">
+                    <h3>Sair</h3>
+                </a>
             </div>
-
         </div>
 
         <div class="dash-right">
@@ -98,7 +113,7 @@
 
             if (resposta.ok) {
                 window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
-                window.location = "/dashboard/mural.html";
+                window.location = "/forum.html";
                 limparFormulario();
                 finalizarAguardar();
             } else if (resposta.status == 404) {
