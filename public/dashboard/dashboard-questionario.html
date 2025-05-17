@@ -10,10 +10,20 @@
 </head>
 
 <body>
+
+    <div class="dashboard-header">
+        <div class="texto-header">
+            <p>DASHBOARD - TELA DE QUESTIONÁRIOS</p>
+        </div>
+        <div class="botao-sair-dash">
+            <a href="../index.html">
+                <p>Sair</p>
+            </a>
+        </div>
+    </div>
+
     <div class="sidebar">
-        <a href="../index.html">
-            <img src="../assets/imgs/logo.png" alt="logo.png">
-        </a>
+        <img src="../assets/imgs/logo.png" alt="logo.png">
         <p>Dashboard</p>
 
         <div class="botao-sidebar">
@@ -23,20 +33,31 @@
         </div>
 
         <div class="botao-sidebar-selecionado">
-            <a href="dashboard.html">
+            <a href="dashboard-questionario.html">
                 <p>Questionarios</p>
             </a>
         </div>
     </div>
 
+    <div class="graficos-pai">
+        <div class="graficos-container">
+            <div class="pizza">
+                <div class="header-pizza">Postagens mais populares</div>
+                <canvas id="graficoPizza">
+                </canvas>
+            </div>
+        </div>
 
-    </div>
-
-    <div class="container-dashboard">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum ex voluptatum cumque quaerat deserunt ab
-            perspiciatis aliquid, explicabo quia eaque quas praesentium mollitia architecto, in odit earum voluptates
-            dicta tempora.</p>
+        <div class="graficos-container2">
+            <div class="barras">
+                <div class="header-barras">Total de mensagens por usuário</div>
+                <canvas id="graficoBarras">
+                </canvas>
+            </div>
+        </div>
     </div>
 </body>
 
 </html>
+<script src="../js/pizzaQuestionario.js"></script>
+<script src="../js/barras.js"></script>

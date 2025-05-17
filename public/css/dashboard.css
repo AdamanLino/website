@@ -4,9 +4,13 @@
 }
 
 /* BODY */
+
 body {
     margin: 0;
     padding: 0;
+    background-image: url(../assets/imgs/background.png);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 a {
@@ -19,7 +23,7 @@ a {
     height: 100%;
     width: 190px;
     top: 0;
-
+    padding: 0px;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -50,29 +54,202 @@ a {
 }
 
 .dashboard-header {
-    display: flex;
+    height: 55px;
     margin-left: 190px;
-    background-color: purple;
+    background-color: #064BAE;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-header a {
+    color: white;
+    text-decoration: underline;
 }
 
 .botao-sair-dash {
     display: flex;
-    justify-content: space-around;
-    justify-content: flex-end;
-    background-color: red;
-    justify-content: flex-end;
+    font-size: 25px;
+    margin-right: 50px;
+    color: white;
+}
 
+.texto-header {
+    margin-left: 30px;
+    font-size: 25px;
+    color: white;
 }
 
 .dashboard-header p {
     margin: 0px;
 }
 
-/* GRÁFICOS */
-
-.pizza {
-    width: 150px;
-    height: 180px;
-    background-color: palevioletred;
+/* KPI */
+.container-kpi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 150px;
 }
 
+.kpi-dash {
+    width: 790px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #01183ae6;
+    box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
+
+}
+
+.header-kpi {
+    text-align: center;
+    color: white;
+    display: flex;
+    font-size: 20px;
+}
+
+.caixa-1 {
+    background-color: #064BAE;
+    width: 220px;
+    height: 140px;
+    border-radius: 10px;
+}
+
+.caixa-2 {
+    background-color: #064BAE;
+    width: 220px;
+    height: 140px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.caixa-3 {
+    background-color: #064BAE;
+    width: 220px;
+    height: 140px;
+    border-radius: 10px;
+}
+
+/* GRÁFICOS */
+.graficos-pai-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graficos-pai-principal-secundario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PIZZA */
+.graficos-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header-pizza {
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.pizza {
+    height: 400px;
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    margin-left: 190px;
+    margin-right: 15px;
+    box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
+    background-color: #01183a;
+}
+
+/* BARRAS */
+.graficos-container2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header-barras {
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.barras {
+    height: 400px;
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
+    background-color: #01183a;
+}
+
+.barras #graficoBarras {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+}
+
+/* LINHA */
+.graficos-container3 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 150px;
+}
+
+.header-linha {
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.linha {
+    height: 205px;
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
+    background-color: #01183a;
+}
+
+.linha #graficoLinha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+}
+
+.linha2 {
+    height: 205px;
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
+    background-color: #01183a;
+    margin-bottom: 50px;
+}
+
+.linha2 #graficoLinha2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+}
+
+/* TELA QUESTIONARIOS */

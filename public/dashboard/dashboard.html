@@ -11,10 +11,20 @@
 </head>
 
 <body>
+
+    <div class="dashboard-header">
+        <div class="texto-header">
+            <p>DASHBOARD - TELA DE MONITORAMENTO</p>
+        </div>
+        <div class="botao-sair-dash">
+            <a href="../index.html">
+                <p>Sair</p>
+            </a>
+        </div>
+    </div>
+
     <div class="sidebar">
-        <a href="../index.html">
-            <img src="../assets/imgs/logo.png" alt="logo.png">
-        </a>
+        <img src="../assets/imgs/logo.png" alt="logo.png">
         <p>Dashboard</p>
 
         <div class="botao-sidebar-selecionado">
@@ -30,57 +40,64 @@
         </div>
     </div>
 
-    <div class="dashboard-header">
-        <div class="botao-sair-dash">
-            <p>DASHBOARD - TELA DE MONITORAMENTO</p>
-            <p>Sair</p>
-        </div>
-    </div>
-
-    <div class="kpi-dash">
-        <div class="caixa-1">
-
-        </div>
-        <div class="caixa-2">
-
-        </div>
-        <div class="caixa-3">
-
+    <div class="container-kpi">
+        <div class="kpi-dash">
+            <div class="header-kpi">
+                <p>Header</p>
+            </div>
+            <div class="caixa-1">
+                membros online
+            </div>
+            <div class="caixa-2">
+                membros banidos
+            </div>
+            <div class="caixa-3">
+                moderadores
+            </div>
         </div>
     </div>
 
     <!-- GRÁFICOS -->
-    <div class="graficos">
-        <div class="pizza">
-            <div class="header-pizza">Header</div>
+    <div class="graficos-pai-principal">
+        <div class="graficos-container">
+            <div class="pizza">
+                <div class="header-pizza">Postagens mais populares</div>
+                <canvas id="graficoPizza">
+                </canvas>
+            </div>
         </div>
-        <canvas id="graficoPizza">
-    </canvas>
+
+        <div class="graficos-container2">
+            <div class="barras">
+                <div class="header-barras">Total de mensagens por usuário</div>
+                <canvas id="graficoBarras">
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="graficos-pai-secundario">
+        <div class="graficos-container3">
+            <div class="linha">
+                <div class="header-linha">Novas Postagens</div>
+                <canvas id="graficoLinha">
+                </canvas>
+            </div>
+        </div>
+        <div class="graficos-container3">
+            <div class="linha2">
+                <div class="header-linha">Novas Mensagens</div>
+                <canvas id="graficoLinha2">
+                </canvas>
+            </div>
+        </div>
     </div>
 
 </body>
 
 </html>
-<script>
-    const graficoPizza = document.getElementById('graficoPizza');
-
-    new Chart(graficoPizza, {
-        type: 'pie',
-        data: {
-            labels: ['Thread 1', 'Thread 2', 'Thread 3'],
-            datasets: [{
-                label: 'Quantidade de Respostas',
-                data: [12, 19, 3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-</script>
+<!-- Chamando os gráficos -->
+<script src="../js/pizza.js"></script>
+<script src="../js/barras.js"></script>
+<script src="../js/linhas.js"></script>
+<script src="../js/linhas2.js"></script>
