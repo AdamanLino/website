@@ -57,7 +57,9 @@
         <div id="div_erros_login">
         </div>
         <div class="login">
-            <img src="./assets/imgs/hand_sign.webp" alt="sonic_hand_sign">
+            <div class="img-login">
+                <img src="./assets/imgs/hand_sign.webp" alt="sonic_hand_sign">
+            </div>
             <span>Entre com a sua conta!</span>
             <p>Login</p>
             <p>Insira o seu e-mail:</p>
@@ -83,6 +85,7 @@
 
         var emailVar = ipt_email.value;
         var senhaVar = ipt_senha.value;
+        var fkpermissaoVar = `SELECT fkpermissao FROM usuario`
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
@@ -104,7 +107,8 @@
             },
             body: JSON.stringify({
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                senhaServer: senhaVar,
+                fkpermissaoServer: fkpermissaoVar
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -118,9 +122,14 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-
+                    sessionStorage.FKPERMISSAO = json.fkpermissao;
+                    console.log(fkpermissaoVar);
                     setTimeout(function () {
-                        window.location = "./dashboard/dashboard.html";
+                        if(fkpermissaoVar == 1) {
+                            window.location = "./dashboard/dashboard.html";
+                        } else {
+                            window.location = "forum.html";
+                        }
                     }, 1000); // apenas para exibir o loading
 
                 });
