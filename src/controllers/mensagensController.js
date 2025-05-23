@@ -19,8 +19,7 @@ var mensagensModel = require("../models/mensagensModel");
 // }
 
 function buscarUltimasPostagens(req, res) {
-    var id = req.params.id;
-    mensagensModel.buscarUltimasPostagens(id)
+    mensagensModel.buscarUltimasPostagens(req)
         .then(resultado => {
             res.status(200).json(resultado);
         })

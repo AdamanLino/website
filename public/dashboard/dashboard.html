@@ -101,123 +101,79 @@
     // Função chamada ao carregar a página para obter e processar os dados
     function obterDados() {
         // Aqui seria a função que obteria os dados do banco de dados
-        // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoLinha nessa função. Exemplo:
         fetch('/mensagens/ultimas/')
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                plotarGraficoLinha(data);
-                plotarGraficoBarra(data);
+                plotarGrafico(data); // Passando os dados corretamente para a função plotarGrafico
             })
             .catch(function (err) {
                 console.log(err);
-            })
-
-        // Como eu não configurei as rotas, eu criei um array com os dados para simular a obtenção dos dados
-        var dados = [{
-            jogador: 'Endrick',
-            votos: 10
-        },
-        {
-            jogador: 'João',
-            votos: 5
-        },
-        {
-            jogador: 'Maria',
-            votos: 15
-        },
-        {
-            jogador: 'José',
-            votos: 20
-        },
-        {
-            jogador: 'Pedro',
-            votos: 25
-        },
-        {
-            jogador: 'Ana',
-            votos: 30
-        }]
-
-        // Chamando a função para plotar o gráfico de linha com os dados
-        plotarGraficoLinha(dados);
-        // Chamando a função para plotar o gráfico de barra com os dados
-        plotarGraficoBarra(dados)
+            });
     }
 
-    // Função para plotar o gráfico de linha
-    function plotarGraficoLinha(dados) {
+    // Função para plotar o gráfico com os dados
+    function plotarGrafico(dados) {
+        console.log('iniciando plotagem do gráfico...');
 
-        // Separando os rótulos (labels) e os dados dos votos
-        var votos = [];
-        var jogadores = [];
+        // Criando estrutura para o gráfico de pizza
+        let labels = [];
+        let dadosGrafico = [];
 
-        // Preenchendo os arrays com os dados
-        for (var i = 0; i < dados.length; i++) {
-            votos.push(dados[i].votos);
-            jogadores.push(dados[i].jogador);
+        // Inserindo valores recebidos em estrutura para o gráfico
+        for (let i = 0; i < dados.length; i++) {
+            let registro = dados[i];
+            labels.push(registro.assunto);  // Usando 'assunto' como label
+            dadosGrafico.push(registro.total_mensagens);  // Contagem de mensagens
         }
 
-        // Capturando o elemento canvas pelo id 
-        var ctx = document.getElementById('linha').getContext('2d');
-        // Criando o gráfico de linha usando o Chart.js
-        var myChart = new Chart(ctx, {
-            type: 'line', // Tipo de gráfico: linha
-            data: { // Dados para o gráfico
-                labels: jogadores, // Rótulos no eixo X
+        console.log('O gráfico será plotado com os seguintes valores:');
+        console.log('Labels:', labels);
+        console.log('Dados:', dadosGrafico);
+
+        // Configurando o gráfico de pizza
+        const config = {
+            type: 'pie',
+            data: {
+                labels: labels,
                 datasets: [{
-                    label: 'Votos', // Nome do conjunto de dados
-                    data: votos, // Dados dos votos
+                    label: 'Postagens Mais Populares',
+                    data: dadosGrafico,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)', // Cor de fundo das linhas
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)', // Cor da borda das linhas
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 1 // Largura da borda das linhas
+                    borderWidth: 1
                 }]
             },
-        });
+            options: {
+                responsive: true
+            }
+        };
+
+        // Plotando o gráfico de pizza no canvas
+        let myChart = new Chart(
+            document.getElementById('graficoPizza'),  // Referência para o canvas
+            config
+        );
     }
 
-    // Função para plotar o gráfico de barra
-    function plotarGraficoBarra(dados) {
-
-        var votos = [];
-        var jogadores = [];
-
-        // Preenchendo os arrays com os dados
-        for (var i = 0; i < dados.length; i++) {
-            votos.push(dados[i].votos);
-            jogadores.push(dados[i].jogador);
-        }
-
-        // Capturando o elemento canvas pelo id 
-        var ctx = document.getElementById('barra').getContext('2d');
-        // Criando o gráfico de barra usando o Chart.js
-        var myChart = new Chart(ctx, {
-            type: 'bar', // Tipo de gráfico: barra
-            data: { // Dados para o gráfico
-                labels: jogadores, // Rótulos no eixo X
-                datasets: [{
-                    label: 'Votos', // Nome do conjunto de dados
-                    data: votos, // Dados dos votos
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)', // Cor de fundo das barras
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)', // Cor da borda das barras
-                    ],
-                    borderWidth: 1 // Largura da borda das barras
-                }]
-            },
-        });
-    }
 </script>
-
 <!-- Chamando os gráficos -->
-<script src="../js/pizza.js"></script>
+<!-- <script src="../js/pizza.js"></script> -->
 <script src="../js/barras.js"></script>
 <script src="../js/linhas.js"></script>
 <script src="../js/linhas2.js"></script>

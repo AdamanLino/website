@@ -3,7 +3,7 @@ var database = require("../database/config");
 function buscarUltimasPostagens() {
 
     var instrucaoSql = `
-    SELECT t.assunto, (count(m.fktopico))
+    SELECT t.assunto, (count(m.fktopico)) as total_mensagens
     FROM topico t
     INNER JOIN mensagem m
     ON t.id = m.fktopico

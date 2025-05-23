@@ -3,8 +3,8 @@ var router = express.Router();
 
 var mensagensController = require("../controllers/mensagensController");
 
-router.get("/ultimas", function (res) {
-    mensagensController.buscarUltimasPostagens(res);
+router.get("/ultimas", function (req, res) {
+    mensagensController.buscarUltimasPostagens(req, res);
 });
 
 module.exports = router;
