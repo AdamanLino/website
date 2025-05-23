@@ -36,7 +36,8 @@ create table topico (
 );
 
 select * from topico;
-
+select * from sonicfansite.usuario;
+select * from sonicfansite.topico;
 create table mensagem (
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     email varchar(80),
