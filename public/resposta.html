@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Responder Postagem</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body onload="mostrarPostagem()">
+    <!-- HEADER -->
+    <header>
+        <div class="header">
+            <div class="logo">
+                <a href="index.html"><img src="./assets/imgs/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="caixa_cadastro">
+                <a href="cadastro.html">
+                    <li>Cadastro</li>
+                </a>
+                <a href="login.html">
+                    <li>Login</li>
+                </a>
+            </div>
+
+            <div class="usuario">
+                <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
+                <div class="btn-logout" onclick="limparSessao()">
+                    <a href="">
+                        <h3>Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <h1>Responder Postagem</h1>
+    <div id="postagem"></div>
+
+    <h2>Escreva sua resposta:</h2>
+    <textarea id="resposta" rows="5" cols="40"></textarea>
+    <br><br>
+    <button onclick="enviarResposta()">Enviar Resposta</button>
+
+    <script>
+        function mostrarPostagem() {
+            const titulo = sessionStorage.getItem("POST_TITULO");
+            const descricao = sessionStorage.getItem("POST_DESCRICAO");
+
+            document.getElementById("postagem").innerHTML = `
+        <h3>${titulo}</h3>
+        <p>${descricao}</p>
+      `;
+        }
+
+        function enviarResposta() {
+            const resposta = document.getElementById("resposta").value;
+            alert("Resposta enviada: " + resposta);
+            // Aqui você pode depois fazer o fetch para o servidor
+        }
+    </script>
+</body>
+
+</html>

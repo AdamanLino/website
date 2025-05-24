@@ -12,7 +12,7 @@
     <script src="./js/alerta.js"></script>
 </head>
 
-<body onload="validarSessao(), atualizarFeed()" style="background-color: #161618;">
+<body onload="validarSessao(), atualizarFeed()">
     <!-- HEADER -->
     <header>
         <div class="header">
@@ -191,12 +191,17 @@
                         var divButtons = document.createElement("div");
                         var btnEditar = document.createElement("button");
                         var btnDeletar = document.createElement("button");
+                        var btnResponder = document.createElement("button");
+                        btnResponder.innerHTML = "Responder";
+                        btnResponder.className = "publicacao-btn-responder";
+                        btnResponder.setAttribute("onclick", `responder("${publicacao.assunto}", "${publicacao.comentario}")`);
+                        divButtons.appendChild(btnResponder);
 
 
-                        spanID.innerHTML = "ID: <b>" + publicacao.id + "</b>";
-                        spanTitulo.innerHTML = "Título: <b>" + publicacao.assunto + "</b>";
-                        spanNome.innerHTML = "Autor: <b>" + publicacao.nome + "</b>";
-                        divDescricao.innerHTML = "Descrição: <b>" + publicacao.comentario + "</b>";
+                        spanID.innerHTML = "ID: <b> " + publicacao.id + "</b>";
+                        spanTitulo.innerHTML = "Título: <b> " + publicacao.assunto + "</b>";
+                        spanNome.innerHTML = "Autor: <b> " + publicacao.nome + "</b>";
+                        divDescricao.innerHTML = "Descrição: <b> " + publicacao.comentario + "</b>";
                         btnEditar.innerHTML = "Editar";
                         btnDeletar.innerHTML = "Deletar";
 
@@ -221,8 +226,11 @@
                         divPublicacao.appendChild(spanTitulo);
                         divPublicacao.appendChild(divDescricao);
                         divPublicacao.appendChild(divButtons);
-                        divButtons.appendChild(btnEditar);
-                        divButtons.appendChild(btnDeletar);
+
+                        if (sessionStorage.FKPERMISSAO == "1") {
+                            divButtons.appendChild(btnEditar);
+                            divButtons.appendChild(btnDeletar);
+                        }
                         feed.appendChild(divPublicacao);
                     }
 
@@ -235,6 +243,12 @@
             console.error(resposta);
             finalizarAguardar();
         });
+    }
+
+    function responder(titulo, descricao) {
+        sessionStorage.setItem("POST_TITULO", titulo);
+        sessionStorage.setItem("POST_DESCRICAO", descricao);
+        window.location = "resposta.html";
     }
 
 </script>
