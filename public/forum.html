@@ -28,56 +28,53 @@
                     <li>Login</li>
                 </a>
             </div>
+
+            <div class="usuario">
+                <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
+                <div class="btn-logout" onclick="limparSessao()">
+                    <a href="">
+                        <h3>Sair</h3>
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- DADOS DO USUÁRIO -->
-    <div class="janela">
-        <div class="header-left">
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <a href="">
-                    <h3>Sair</h3>
-                </a>
+    <div class="container-forum">
+        <h1>Publicar um post</h1>
+        <div class="form-forum">
+            <form id="form_postagem" method="post" onsubmit="return publicar()">
+                <label>
+                    E-mail:
+                    <br>
+                    <input name="email" id="email" maxlength="100" type="text">
+                </label>
+                <br>
+                <label>
+                    Título:
+                    <br>
+                    <input name="titulo" id="titulo" maxlength="100" type="text">
+                </label>
+                <br>
+                <br>
+                <label>
+                    Mensagem (máximo de 280 caracteres):
+                    <br>
+                    <textarea name="descricao" id="textarea_descricao" maxlength="250" rows="5"></textarea>
+                </label>
+                <br>
+                <br>
+                <button>Enviar</button>
+            </form>
+        </div>
+        <div class="container-posts">
+            <h1>Últimos Posts</h1>
+            <div id="feed_container" class="feed-container">
             </div>
         </div>
-
-        <div class="dash-right">
-            <div class="avisos">
-                <div id="alerta">
-                </div>
-                <div class="container">
-                    <h1>Publicar um post</h1>
-                    <div class="div-form">
-                        <form id="form_postagem" method="post" onsubmit="return publicar()">
-                            <label>
-                                Título:
-                                <br>
-                                <input name="titulo" id="titulo" maxlength="100" type="text">
-                            </label>
-                            <br>
-                            <br>
-                            <label>
-                                Mensagem (máximo de 250 caracteres):
-                                <br>
-                                <textarea name="descricao" id="textarea_descricao" maxlength="250" rows="5"></textarea>
-                            </label>
-                            <br>
-                            <br>
-                            <button>Enviar</button>
-                        </form>
-                    </div>
-                    <h1>Últimos Posts</h1>
-                    <div class="div-results">
-                        <div id="feed_container" class="feed-container">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <div id="div_aguardar"></div>
@@ -88,6 +85,12 @@
 <script>
 
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    if (sessionStorage.ID_USUARIO) {
+        document.querySelector('.caixa_cadastro').style.display = 'none';
+    } else {
+        document.querySelector('.usuario').style.display = 'none';
+    }
 
     function limparFormulario() {
         document.getElementById("form_postagem").reset();

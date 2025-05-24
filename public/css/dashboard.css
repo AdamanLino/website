@@ -90,6 +90,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin-top: 10px;
     margin-left: 150px;
 }
@@ -100,8 +101,9 @@ a {
 
 .kpi-dash {
     width: 790px;
-    height: 200px;
+    height: 280px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #01183ae6;
@@ -114,6 +116,11 @@ a {
     color: white;
     display: flex;
     font-size: 20px;
+    margin: 0px;
+}
+
+.caixas {
+    display: flex;
 }
 
 .caixa-1 {
@@ -193,8 +200,8 @@ a {
 }
 
 .barras {
-    height: 400px;
-    width: 400px;
+    height: 250px;
+    width: 500px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(2, 6, 14, 0.6);
