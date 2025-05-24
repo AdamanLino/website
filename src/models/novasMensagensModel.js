@@ -1,12 +1,12 @@
 var database = require("../database/config");
 
-function buscarNovasPostagens() {
+function buscarNovasMensagens() {
 
     var instrucaoSql = `
-    SELECT t.assunto,
+    SELECT m.comentario,
         DATE_FORMAT(dtCriacao, '%H:00') AS hora,
-        COUNT(*) AS total_posts
-    FROM topico t
+        COUNT(*) AS total_mensagens
+    FROM mensagem m
     GROUP BY hora;`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -14,5 +14,5 @@ function buscarNovasPostagens() {
 }
 
 module.exports = {
-    buscarNovasPostagens
+    buscarNovasMensagens
 };

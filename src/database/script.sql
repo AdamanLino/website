@@ -155,6 +155,14 @@ order by total_comentarios desc;
 select t.assunto, t.dtCriacao
 from topico t;
 
+-- gráfico do total de votos na enquete
+SELECT a.texto, 
+	COUNT(ue.fkusuario) AS total_votos
+FROM alternativa a
+LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
+WHERE a.fkenquete = 2
+GROUP BY a.id, a.texto;
+
 -- TESTES
 /*
 select * from topico;
