@@ -94,6 +94,10 @@ a {
     margin-left: 150px;
 }
 
+.container-kpi .header-kpi {
+    flex-direction: column;
+}
+
 .kpi-dash {
     width: 790px;
     height: 200px;

@@ -75,7 +75,7 @@
     </div>
     <div id="div_aguardar">
     </div>
-    
+
 </body>
 
 </html>
@@ -85,7 +85,6 @@
 
         var emailVar = ipt_email.value;
         var senhaVar = ipt_senha.value;
-        var fkpermissaoVar = `SELECT fkpermissao FROM usuario`
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
@@ -108,7 +107,6 @@
             body: JSON.stringify({
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                fkpermissaoServer: fkpermissaoVar
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -117,21 +115,20 @@
                 console.log(resposta);
 
                 resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.FKPERMISSAO = json.fkpermissao;
-                    console.log(fkpermissaoVar);
-                    setTimeout(function () {
-                        if(fkpermissaoVar == 1) {
+
+                    var permissao = Number(sessionStorage.FKPERMISSAO);
+
+                    setTimeout(() => {
+                        if (permissao == 1) {
                             window.location = "./dashboard/dashboard.html";
                         } else {
                             window.location = "forum.html";
                         }
-                    }, 1000); // apenas para exibir o loading
-
+                    }, 1000);
                 });
 
             } else {

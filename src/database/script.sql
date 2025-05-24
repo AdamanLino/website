@@ -34,10 +34,7 @@ create table topico (
     fkusuario INT NOT NULL,
     FOREIGN KEY (fkusuario) references usuario(id)
 );
-
-select * from topico;
-select * from sonicfansite.usuario;
-select * from sonicfansite.topico;
+    
 create table mensagem (
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     email varchar(80),
@@ -104,3 +101,19 @@ on top.id = men.fktopico;
 
 -- mostra as enquetes
 select * from enquete;
+
+-- selects da dashboard
+SELECT t.assunto, count(m.comentario) AS total_mensagens
+FROM topico t
+LEFT JOIN mensagem m ON t.id = m.fktopico
+GROUP BY t.id, t.assunto;
+
+
+-- TESTES
+select * from topico;
+select * from mensagem;
+insert into topico(assunto, comentario, fkusuario)
+	values ('Assuntos variados', 'Comentario top', 4);
+
+insert into mensagem (comentario, dtCriacao, fktopico, fkusuario) 
+	values('TESTE', now(), 24, 4);

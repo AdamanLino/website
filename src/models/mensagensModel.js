@@ -3,12 +3,11 @@ var database = require("../database/config");
 function buscarUltimasPostagens() {
 
     var instrucaoSql = `
-    SELECT t.assunto, (count(m.fktopico)) as total_mensagens
+    SELECT t.assunto, count(m.comentario) AS total_mensagens
     FROM topico t
-    INNER JOIN mensagem m
-    ON t.id = m.fktopico
-    GROUP BY t.assunto;`
-    
+    LEFT JOIN mensagem m ON t.id = m.fktopico
+    GROUP BY t.id, t.assunto;`
+
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
