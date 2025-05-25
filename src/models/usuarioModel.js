@@ -22,7 +22,17 @@ function cadastrar(nome, email, senha) {
     return database.executar(instrucaoSql);
 }
 
+function listarUsuarios() {
+    var instrucaoSql = `
+        SELECT u.nome, u.situacao, p.tipo
+        FROM usuario u
+        JOIN permissao p ON u.fkpermissao = p.id;
+    `;
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listarUsuarios
 };

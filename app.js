@@ -26,6 +26,7 @@ var mensagensRouter = require("./src/routes/mensagens");
 var mensagemUsuarioRouter = require("./src/routes/mensagemUsuario");
 var novasPostagensRouter = require("./src/routes/novasPostagens");
 var novasMensagensRouter = require("./src/routes/novasMensagens")
+var enqueteRouter = require("./src/routes/enquete")
 
 
 var empresasRouter = require("./src/routes/empresas");
@@ -43,6 +44,7 @@ app.use("/mensagens", mensagensRouter);
 app.use("/mensagensUsuario", mensagemUsuarioRouter);
 app.use("/postagens", novasPostagensRouter);
 app.use("/mensagens", novasMensagensRouter);
+app.use("/votos", enqueteRouter);
 app.use("/empresas", empresasRouter);
 
 app.listen(PORTA_APP, function () {

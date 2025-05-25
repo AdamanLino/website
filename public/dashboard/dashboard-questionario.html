@@ -7,9 +7,10 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="shortcut icon" href="../assets/imgs/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="obterDadosPizzaQuestionario()">
 
     <div class="dashboard-header">
         <div class="texto-header">
@@ -42,16 +43,8 @@
     <div class="graficos-pai">
         <div class="graficos-container">
             <div class="pizza">
-                <div class="header-pizza">Respostas Questionários</div>
-                <canvas id="graficoPizza">
-                </canvas>
-            </div>
-        </div>
-
-        <div class="graficos-container2">
-            <div class="barras">
-                <div class="header-barras">Total de mensagens por usuário</div>
-                <canvas id="graficoBarras">
+                <div class="header-pizza">Votos Do Questionário</div>
+                <canvas id="graficoPizzaQuestionario">
                 </canvas>
             </div>
         </div>
@@ -60,4 +53,3 @@
 
 </html>
 <script src="../js/pizzaQuestionario.js"></script>
-<script src="../js/barras.js"></script>

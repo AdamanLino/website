@@ -93,6 +93,7 @@ a {
     flex-direction: column;
     margin-top: 10px;
     margin-left: 150px;
+    color: white;
 }
 
 .container-kpi .header-kpi {

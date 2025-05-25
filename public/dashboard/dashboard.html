@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="obterDadosPizza(); obterDadosBarras(); obterDadosLinha(); obterDadosLinha2()">
+<body onload="obterDadosPizza(); obterDadosBarras(); obterDadosLinha(); obterDadosLinha2(); carregarNomes();">
 
     <div class="dashboard-header">
         <div class="texto-header">
@@ -40,6 +40,7 @@
         </div>
     </div>
 
+    <!-- KPI -->
     <div class="container-kpi">
         <div class="kpi-dash">
             <div class="header-kpi">
@@ -48,13 +49,13 @@
 
             <div class="caixas">
                 <div class="caixa-1">
-                    <p>Membros Cadastrados</p>
+                    <p>Membros Cadastrados: <span id="kpi_cadastrados">Nenhum membro</span></p>
                 </div>
                 <div class="caixa-2">
-                    membros banidos
+                    <p>Membros Banidos: <span id="kpi_banidos">Nenhum membro</span></p>
                 </div>
                 <div class="caixa-3">
-                    moderadores
+                    <p>Moderadores: <span id="kpi_moderadores">Nenhum membro</span></p>
                 </div>
             </div>
         </div>
@@ -100,7 +101,93 @@
 </body>
 
 </html>
+<script>
+    // Endpoint para listar membros, banidos e moderadores
+    app.get('/usuarios/listar', (req, res) => {
+        db.query("SELECT nome, tipo, situacao FROM usuarios", (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: "Erro ao consultar usuários" });
+            }
 
+            const membros = [];
+            const banidos = [];
+            const moderadores = [];
+
+            result.forEach(usuario => {
+                if (usuario.tipo === "membro" && usuario.situacao === "ativo") {
+                    membros.push(usuario.nome);
+                }
+                if (usuario.situacao === "banido") {
+                    banidos.push(usuario.nome);
+                }
+                if (usuario.tipo === "moderador") {
+                    moderadores.push(usuario.nome);
+                }
+            });
+
+            res.json({ membros, banidos, moderadores });
+        });
+    });
+
+    function carregarNomes() {
+        // Requisição para buscar os dados dos usuários
+        fetch('/usuarios/listar')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao carregar dados dos usuários");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Exibindo os membros cadastrados
+                let membrosTexto = data.membros.length > 0 ? data.membros.join(", ") : "Nenhum membro";
+                document.getElementById("kpi_cadastrados").innerText = membrosTexto;
+
+                // Exibindo os membros banidos
+                let banidosTexto = data.banidos.length > 0 ? data.banidos.join(", ") : "Nenhum membro";
+                document.getElementById("kpi_banidos").innerText = banidosTexto;
+
+                // Exibindo os moderadores
+                let moderadoresTexto = data.moderadores.length > 0 ? data.moderadores.join(", ") : "Nenhum membro";
+                document.getElementById("kpi_moderadores").innerText = moderadoresTexto;
+            })
+            .catch(error => {
+                console.error(error);
+                // Exibir mensagem de erro, caso necessário
+            });
+    }
+
+</script>
+<!-- <script>
+    // Exemplo de salvar os nomes dos membros no sessionStorage
+    let membrosCadastrados = ["João", "Maria", "Carlos"];
+    let membrosBanidos = ["Pedro", "Ana"];
+    let moderadores = ["Lucas", "Fernanda"];
+
+    // Salvando os nomes dos membros no sessionStorage
+    sessionStorage.setItem("membrosCadastrados", JSON.stringify(membrosCadastrados));
+    sessionStorage.setItem("membrosBanidos", JSON.stringify(membrosBanidos));
+    sessionStorage.setItem("moderadores", JSON.stringify(moderadores));
+
+    function carregarNomes() {
+        // Recuperando os dados do sessionStorage
+        let membrosCadastrados = JSON.parse(sessionStorage.getItem("membrosCadastrados")) || [];
+        let membrosBanidos = JSON.parse(sessionStorage.getItem("membrosBanidos")) || [];
+        let moderadores = JSON.parse(sessionStorage.getItem("moderadores")) || [];
+
+        // Exibindo os membros cadastrados
+        let membrosCadastradosTexto = membrosCadastrados.length > 0 ? membrosCadastrados.join(", ") : "Nenhum membro";
+        document.getElementById("kpi_cadastrados").innerText = membrosCadastradosTexto;
+
+        // Exibindo os membros banidos
+        let membrosBanidosTexto = membrosBanidos.length > 0 ? membrosBanidos.join(", ") : "Nenhum membro";
+        document.getElementById("kpi_banidos").innerText = membrosBanidosTexto;
+
+        // Exibindo os moderadores
+        let moderadoresTexto = moderadores.length > 0 ? moderadores.join(", ") : "Nenhum membro";
+        document.getElementById("kpi_moderadores").innerText = moderadoresTexto;
+    }
+</script> -->
 <!-- Para deslogar da sessao -->
 <script src="../js/sessao.js"></script>
 

@@ -21,6 +21,7 @@ create table usuario (
     nome varchar(80) NOT NULL,
     email varchar(80) NOT NULL,
     senha varchar(80) NOT NULL,
+    situacao ENUM('ativo', 'banido') NOT NULL DEFAULT 'ativo',
     dtCriacao datetime NOT NULL DEFAULT(now()),
     fkpermissao INT NOT NULL DEFAULT 3,
     FOREIGN KEY (fkpermissao) references permissao(id)
@@ -113,6 +114,10 @@ insert into alternativa (texto, fkenquete)
 		   ('Hyper Sonic', 3),
 		   ('Werehog', 3);
 
+
+-- para banir um usuário diretamente do BD
+update usuario set situacao = 'banido' where id = 4;
+
 -- selects
 -- mostra os dados dos usuários e seus cargos
 select * 
@@ -141,7 +146,7 @@ SELECT t.assunto, count(m.comentario) AS total_mensagens
 FROM topico t
 LEFT JOIN mensagem m ON t.id = m.fktopico
 GROUP BY t.id, t.assunto
-having total_mensagens <= 5;
+HAVING total_mensagens <= 5;
 
 -- gráfico de total de mensagens por usuário
 SELECT u.nome,
@@ -152,8 +157,18 @@ group by u.nome
 order by total_comentarios desc;
 
 -- grafico de novas postagens
-select t.assunto, t.dtCriacao
-from topico t;
+SELECT t.assunto,
+    DATE_FORMAT(dtCriacao, '%H:00') AS hora,
+    COUNT(*) AS total_posts
+FROM topico t
+GROUP BY hora;
+
+-- gráfico de novas mensagens
+SELECT m.comentario,
+    DATE_FORMAT(dtCriacao, '%H:00') AS hora,
+    COUNT(*) AS total_mensagens
+FROM mensagem m
+GROUP BY hora;
 
 -- gráfico do total de votos na enquete
 SELECT a.texto, 
@@ -163,7 +178,32 @@ LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
 WHERE a.fkenquete = 2
 GROUP BY a.id, a.texto;
 
+
 -- TESTES
+-- Inserções de mensagens em horários diferentes para popular o gráfico
+INSERT INTO mensagem (comentario, dtCriacao, fktopico, fkusuario) VALUES
+('Concordo com tudo que foi dito!', STR_TO_DATE('2025-05-24 08:10:00', '%Y-%m-%d %H:%i:%s'), 1, 2),
+('Realmente, o design dessa fase é impecável.', STR_TO_DATE('2025-05-24 08:45:00', '%Y-%m-%d %H:%i:%s'), 1, 3),
+('Nunca tinha pensado por esse lado.', STR_TO_DATE('2025-05-24 09:15:00', '%Y-%m-%d %H:%i:%s'), 2, 4),
+('Alguém já jogou Sonic Battle?', STR_TO_DATE('2025-05-24 10:30:00', '%Y-%m-%d %H:%i:%s'), 3, 5),
+('Sim! E é muito bom!', STR_TO_DATE('2025-05-24 10:55:00', '%Y-%m-%d %H:%i:%s'), 3, 1),
+('Vale a pena usar escudo elemental?', STR_TO_DATE('2025-05-24 11:20:00', '%Y-%m-%d %H:%i:%s'), 2, 6),
+('Minha fase favorita é a Stardust Speedway!', STR_TO_DATE('2025-05-24 12:05:00', '%Y-%m-%d %H:%i:%s'), 1, 3),
+('O final do Sonic Adventure é emocionante!', STR_TO_DATE('2025-05-24 13:45:00', '%Y-%m-%d %H:%i:%s'), 2, 4),
+('Hyper Sonic deveria voltar!', STR_TO_DATE('2025-05-24 14:15:00', '%Y-%m-%d %H:%i:%s'), 3, 2);
+
+-- Inserções manuais com horários diferentes
+INSERT INTO topico (assunto, comentario, dtCriacao, fkusuario)
+VALUES 
+('Melhor jogo 2D do Sonic?', 'Sonic CD é muito estiloso.', STR_TO_DATE('2025-05-24 08:15:00', '%Y-%m-%d %H:%i:%s'), 3),
+('Vale a pena jogar Sonic Forces?', 'Achei divertido, mas meio fácil.', STR_TO_DATE('2025-05-24 09:30:00', '%Y-%m-%d %H:%i:%s'), 4),
+('OST favorita?', 'A trilha sonora do Sonic Rush é absurda!', STR_TO_DATE('2025-05-24 10:45:00', '%Y-%m-%d %H:%i:%s'), 5),
+('Sonic Generations ou Unleashed?', 'Ambos são ótimos, mas prefiro Generations.', STR_TO_DATE('2025-05-24 10:55:00', '%Y-%m-%d %H:%i:%s'), 2),
+('Curiosidades sobre o Knuckles', 'Sabia que ele foi criado como rival?', STR_TO_DATE('2025-05-24 12:05:00', '%Y-%m-%d %H:%i:%s'), 3),
+('Melhor vilão?', 'O Metal Sonic é o mais icônico.', STR_TO_DATE('2025-05-24 13:20:00', '%Y-%m-%d %H:%i:%s'), 6),
+('Sonic Frontiers é bom?', 'Gameplay diferente, mas muito bom!', STR_TO_DATE('2025-05-24 13:50:00', '%Y-%m-%d %H:%i:%s'), 1),
+('Preferem jogos 2D ou 3D?', 'Sinto que o 2D tem mais charme!', STR_TO_DATE('2025-05-24 14:00:00', '%Y-%m-%d %H:%i:%s'), 4);
+
 /*
 select * from topico;
 select * from mensagem;
