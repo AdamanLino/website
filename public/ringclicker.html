@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ring Clicker</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./assets/imgs/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="logo">
+                <a href="index.html"><img src="./assets/imgs/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="caixa_cadastro">
+                <a href="cadastro.html">
+                    <li>Cadastro</li>
+                </a>
+                <a href="login.html">
+                    <li>Login</li>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav">
+        <nav>
+            <ul>
+                <a href="jogos.html">
+                    <li>Jogos</li>
+                </a>
+                <a href="desenhos.html">
+                    <li>Desenhos</li>
+                </a>
+                <a href="historia.html">
+                    <li>História</li>
+                </a>
+                <a href="sobre.html">
+                    <li>Sobre Mim</li>
+                </a>
+                <a href="forum.html">
+                    <li>Fórum</li>
+                </a>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="container-ring">
+        <h2>Ring Clicker</h2>
+        <div id="div_contador"></div>
+        <div id="div_aneisPorSegundo"></div>
+        <div onclick="clickRing()" class="ring">
+            <img src="./assets/imgs/sonic-ring-sonic.gif" alt="ring">
+        </div>
+
+        <h3>Loja</h3>
+        <div class="loja">
+            <div onclick="knuckles_hands()" class="knuckles_hands">
+                Mãos do Knuckles - 10 Anéis<br>
+                0.2 Anéis Por Segundo
+            </div>
+
+            <div onclick="chao_garden()" class="chao_garden">
+                Jardim de Chaos - 100 Anéis<br>
+                0.5 Anéis Por Segundo
+            </div>
+        </div>
+
+        <div id="div_alertas"></div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    let rings = 0;
+    let ringsPorSegundo = 0;
+
+    function atualizarContador() {
+        div_contador.innerHTML = `Anéis coletados: ${rings.toFixed()}`
+    }
+
+    function atualizarAneisPorSegundo() {
+        div_aneisPorSegundo.innerHTML = `Anéis Por Segundo: ${ringsPorSegundo.toFixed(2)}`
+    }
+
+    function atualizarAlerta() {
+        div_alertas.innerHTML = "";
+    }
+
+    function clickRing() {
+        rings++
+        atualizarContador()
+        atualizarAneisPorSegundo()
+    }
+
+    function knuckles_hands() {
+        if (rings >= 10) {
+            rings -= 10;
+            ringsPorSegundo += 0.2
+        } else {
+            div_alertas.innerHTML = `Dinheiro Insuficiente`
+        }
+        atualizarContador()
+        atualizarAneisPorSegundo()
+    }
+
+    function chao_garden() {
+        if (rings >= 100) {
+            rings -= 100;
+            ringsPorSegundo += 0.5
+        } else {
+            div_alertas.innerHTML = `Dinheiro Insuficiente`
+        }
+
+        atualizarContador()
+        atualizarAneisPorSegundo()
+    }
+
+    function atualizar() {
+        rings += ringsPorSegundo;
+        atualizarContador();
+        atualizarAneisPorSegundo();
+        atualizarAlerta();
+    }
+
+    setInterval(atualizar, 1000);
+
+</script>

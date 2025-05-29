@@ -2,10 +2,14 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="shortcut icon" href="./assets/imgs/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <title>Responder Postagem</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fórum</title>
+    <link rel="stylesheet" href="./css/style.css" />
     <script src="./js/sessao.js"></script>
+    <script src="./js/alerta.js"></script>
 </head>
 
 <body onload="mostrarPostagem()">
@@ -37,34 +41,90 @@
     </header>
 
     <div class="container-mensagem" id="postagem"></div>
-    <h2>Escreva sua resposta:</h2>
-    <textarea id="resposta" rows="5" cols="40"></textarea>
-    <br><br>
-    <button onclick="enviarResposta()">Enviar Resposta</button>
+    <div id="feed_container" class="feed-container">
 
-    <script>
-
-        if (sessionStorage.ID_USUARIO) {
-            document.querySelector('.caixa_cadastro').style.display = 'none';
-        } else {
-            document.querySelector('.usuario').style.display = 'none';
-        }
-
-        function mostrarPostagem() {
-            const titulo = sessionStorage.getItem("POST_TITULO");
-            const descricao = sessionStorage.getItem("POST_DESCRICAO");
-
-            document.getElementById("postagem").innerHTML = `
-        <h3>${titulo}</h3>
-        <p>${descricao}</p>
-      `;
-        }
-
-        function enviarResposta() {
-            const resposta = document.getElementById("resposta").value;
-            alert("Resposta enviada: " + resposta);
-        }
-    </script>
+        <div class="container-forum">
+            <div class="form-forum">
+                <form id="form_postagem" method="post" onsubmit="return publicar()">
+                    <label>
+                        E-mail:
+                        <br>
+                        <input name="email" id="email" maxlength="100" type="text">
+                    </label>
+                    <br>
+                    <br>
+                    <label>
+                        Mensagem (máximo de 280 caracteres):
+                        <br>
+                        <textarea name="descricao" id="textarea_descricao" maxlength="250" rows="5"></textarea>
+                    </label>
+                    <br>
+                    <br>
+                    <button>Enviar Resposta</button>
+                </form>
+            </div>
+        </div>
+        <input type="hidden" id="id_topico" value="">
 </body>
+<script>
+    var idTopico = sessionStorage.getItem("ID_TOPICO");
+    if (sessionStorage.ID_USUARIO) {
+        document.querySelector('.caixa_cadastro').style.display = 'none';
+    } else {
+        document.querySelector('.usuario').style.display = 'none';
+    }
+
+    function mostrarPostagem() {
+        const titulo = sessionStorage.getItem("POST_TITULO");
+        const descricao = sessionStorage.getItem("POST_DESCRICAO");
+        const idTopico = sessionStorage.getItem("POST_ID");
+
+        document.getElementById("postagem").innerHTML = `
+        <h3>${titulo}</h3>
+        <p>${descricao}</p>`;
+        document.getElementById("id_topico").value = idTopico;
+    }
+
+
+    function enviarResposta() {
+        const resposta = document.getElementById("resposta").value;
+        alert("Resposta enviada: " + resposta);
+    }
+
+    function publicar() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+        var email = sessionStorage.EMAIL_USUARIO;
+        var idTopico = document.getElementById("id_topico").value;
+        var comentario = document.getElementById("textarea_descricao").value;
+        var email = document.getElementById("email").value;
+
+        var corpo = {
+            comentario: comentario,
+            fktopico: idTopico,
+            email: email
+        };
+
+        console.log("Enviando:", corpo, "Usuário ID:", idUsuario);
+
+        fetch(`/resposta/publicar/${idUsuario}`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(corpo)
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                alert("Resposta enviada com sucesso!");
+                window.location = "/forum.html";
+            } else {
+                alert("Erro ao enviar resposta");
+            }
+        }).catch(function (erro) {
+            console.error("#ERRO:", erro);
+        });
+
+        return false;
+    }
+</script>
 
 </html>

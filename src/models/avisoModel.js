@@ -56,7 +56,8 @@ function listarPorUsuario(idUsuario) {
         FROM topico a
             INNER JOIN usuario u
                 ON a.fkusuario = u.id
-        WHERE u.id = ${idUsuario};
+        WHERE u.id = ${idUsuario}
+        ORDER BY id DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

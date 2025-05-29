@@ -20,16 +20,16 @@ app.use(express.json());
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
+// var medidasRouter = require("./src/routes/medidas");
 // var aquariosRouter = require("./src/routes/aquarios");
 var mensagensRouter = require("./src/routes/mensagens");
 var mensagemUsuarioRouter = require("./src/routes/mensagemUsuario");
 var novasPostagensRouter = require("./src/routes/novasPostagens");
-var novasMensagensRouter = require("./src/routes/novasMensagens")
-var enqueteRouter = require("./src/routes/enquete")
+var novasMensagensRouter = require("./src/routes/novasMensagens");
+var enqueteRouter = require("./src/routes/enquete");
+var respostaController = require("./src/routes/resposta");
 
-
-var empresasRouter = require("./src/routes/empresas");
+// var empresasRouter = require("./src/routes/empresas");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -38,14 +38,15 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
+// app.use("/medidas", medidasRouter);
 // app.use("/aquarios", aquariosRouter);
 app.use("/mensagens", mensagensRouter);
-app.use("/mensagensUsuario", mensagemUsuarioRouter);
-app.use("/postagens", novasPostagensRouter);
 app.use("/mensagens", novasMensagensRouter);
+app.use("/postagens", novasPostagensRouter);
 app.use("/votos", enqueteRouter);
-app.use("/empresas", empresasRouter);
+app.use("/mensagensUsuario", mensagemUsuarioRouter);
+// app.use("/empresas", empresasRouter);
+app.use("/resposta", respostaController);
 
 app.listen(PORTA_APP, function () {
     console.log(`
