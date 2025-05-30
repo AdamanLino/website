@@ -77,13 +77,22 @@
     function mostrarPostagem() {
         const titulo = sessionStorage.getItem("POST_TITULO");
         const descricao = sessionStorage.getItem("POST_DESCRICAO");
-        const idTopico = sessionStorage.getItem("POST_ID");
+        const idTopico = sessionStorage.getItem("POST_ID");  // Recuperando o ID do tópico da sessionStorage
 
-        document.getElementById("postagem").innerHTML = `
-        <h3>${titulo}</h3>
-        <p>${descricao}</p>`;
-        document.getElementById("id_topico").value = idTopico;
+        // Verificando se o ID do tópico está presente
+        if (idTopico) {
+            // Exibe o título e a descrição no HTML
+            document.getElementById("postagem").innerHTML = `
+            <h3>${titulo}</h3>
+            <p>${descricao}</p>`;
+
+            // Atribuindo o ID do tópico ao campo oculto
+            document.getElementById("id_topico").value = idTopico;
+        } else {
+            console.error("ID do Tópico não encontrado na sessionStorage.");
+        }
     }
+
 
 
     function enviarResposta() {
@@ -101,6 +110,7 @@
         var corpo = {
             comentario: comentario,
             fktopico: idTopico,
+            fkusuario: idUsuario,
             email: email
         };
 

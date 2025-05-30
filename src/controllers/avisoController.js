@@ -126,11 +126,45 @@ function deletar(req, res) {
         );
 }
 
+function listarUsuarios(req, res) {
+    var situacao = req.query.situacao || 'ativo';  // Parâmetro de query 'situacao'
+
+    usuarioModel.listarUsuarios(situacao)  // Chama o model para pegar os dados
+        .then(resultado => {
+            if (resultado.length > 0) {
+                const membros = [];
+                const banidos = [];
+                const moderadores = [];
+
+                resultado.forEach(usuario => {
+                    if (usuario.situacao === "ativo") {
+                        if (usuario.tipo === "membro") {
+                            membros.push(usuario.nome);
+                        }
+                        if (usuario.tipo === "moderador") {
+                            moderadores.push(usuario.nome);
+                        }
+                    } else if (usuario.situacao === "banido") {
+                        banidos.push(usuario.nome);
+                    }
+                });
+
+                res.json({ membros, banidos, moderadores });
+            } else {
+                res.status(204).send("Nenhum usuário encontrado.");
+            }
+        })
+        .catch(erro => {
+            console.log("Erro ao listar usuários: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 module.exports = {
     listar,
     listarPorUsuario,
     pesquisarDescricao,
     publicar,
     editar,
-    deletar
+    deletar,
+    listarUsuarios
 }

@@ -47,30 +47,29 @@
                 <label>
                     E-mail:
                     <br>
-                    <input name="email" id="email" maxlength="80" type="text">
+                    <input name="email" id="email" maxlength="100" type="text">
                 </label>
                 <br>
                 <label>
                     Título:
                     <br>
-                    <input name="titulo" id="titulo" maxlength="280" type="text">
+                    <input name="titulo" id="titulo" maxlength="100" type="text">
                 </label>
                 <br>
                 <br>
                 <label>
                     Mensagem (máximo de 280 caracteres):
                     <br>
-                    <textarea name="descricao" id="textarea_descricao" maxlength="280" rows="5"></textarea>
+                    <textarea name="descricao" id="textarea_descricao" maxlength="250" rows="5"></textarea>
                 </label>
                 <br>
                 <br>
                 <button>Enviar</button>
             </form>
         </div>
-
+        
         <div class="container-questionario">
             <p>TESTE</p>
-
             <label for="html">Sonic</label><br>
             <input type="radio" id="html" name="fav_language" value="HTML">
             <input type="radio" id="css" name="fav_language" value="CSS">
@@ -78,12 +77,14 @@
             <input type="radio" id="javascript" name="fav_language" value="JavaScript">
             <label for="javascript">JavaScript</label>
         </div>
-
         <div class="container-posts">
             <h1>Últimos Posts</h1>
             <div id="feed_container" class="feed-container">
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <div id="div_aguardar"></div>
@@ -203,7 +204,7 @@
                         var btnResponder = document.createElement("button");
                         btnResponder.innerHTML = "Responder";
                         btnResponder.className = "publicacao-btn-responder";
-                        btnResponder.setAttribute("onclick", `responder(${publicacao.id}, "${publicacao.assunto}", "${publicacao.comentario}")`);
+                        btnResponder.setAttribute("onclick", `responder("${publicacao.assunto}", "${publicacao.comentario}")`);
                         divButtons.appendChild(btnResponder);
 
 
@@ -255,10 +256,8 @@
     }
 
     function responder(titulo, descricao) {
-        sessionStorage.setItem("ID_TOPICO", idTopico);
         sessionStorage.setItem("POST_TITULO", titulo);
         sessionStorage.setItem("POST_DESCRICAO", descricao);
         window.location = "resposta.html";
     }
-
 </script>

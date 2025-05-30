@@ -101,62 +101,39 @@
 </body>
 
 </html>
+
 <script>
-
-    app.get('/usuarios/listar', (req, res) => {
-        db.query("SELECT nome, tipo, situacao FROM usuarios", (err, result) => {
-            if (err) {
-                return res.status(500).json({ error: "Erro ao consultar usuários" });
-            }
-
-            const membros = [];
-            const banidos = [];
-            const moderadores = [];
-
-            result.forEach(usuario => {
-                if (usuario.tipo === "membro" && usuario.situacao === "ativo") {
-                    membros.push(usuario.nome);
-                }
-                if (usuario.situacao === "banido") {
-                    banidos.push(usuario.nome);
-                }
-                if (usuario.tipo === "moderador") {
-                    moderadores.push(usuario.nome);
-                }
-            });
-
-            res.json({ membros, banidos, moderadores });
-        });
-    });
-
+    let membrosCadastrados = [];
+    let membrosBanidos = [];
+    let moderadores = [];
     function carregarNomes() {
-        // Requisição para buscar os dados dos usuários
-        fetch('/usuarios/listar')
+        // Aqui você vai carregar os dados da API (a partir da resposta)
+        fetch('/usuarios/listarKpi')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Erro ao carregar dados dos usuários");
+                    throw new Error(`Erro na requisição: ${response.status}`);
                 }
-                return response.json();
+                return response.json(); // Convertendo diretamente para JSON
             })
             .then(data => {
-                // Exibindo os membros cadastrados
-                let membrosTexto = data.membros.length > 0 ? data.membros.join(", ") : "Nenhum membro";
-                document.getElementById("kpi_cadastrados").innerText = membrosTexto;
+                membrosCadastrados = data.membros || [];
+                moderadores = data.moderadores || [];
 
-                // Exibindo os membros banidos
-                let banidosTexto = data.banidos.length > 0 ? data.banidos.join(", ") : "Nenhum membro";
-                document.getElementById("kpi_banidos").innerText = banidosTexto;
-
-                // Exibindo os moderadores
-                let moderadoresTexto = data.moderadores.length > 0 ? data.moderadores.join(", ") : "Nenhum membro";
-                document.getElementById("kpi_moderadores").innerText = moderadoresTexto;
+                document.getElementById("kpi_cadastrados").innerText = membrosCadastrados.length > 0 ? membrosCadastrados.join(", ") : "Nenhum membro";
+                document.getElementById("kpi_moderadores").innerText = moderadores.length > 0 ? moderadores.join(", ") : "Nenhum moderador";
             })
-            .catch(error => {
-                console.error(error);
-                // Exibir mensagem de erro, caso necessário
-            });
-    }
+            .catch(error => console.log("Erro ao carregar membros: ", error));
 
+
+        fetch('/usuarios/listarKpi?situacao=banido')
+            .then(response => response.json())
+            .then(data => {
+                membrosBanidos = data.banidos || [];
+
+                document.getElementById("kpi_banidos").innerText = membrosBanidos.length > 0 ? membrosBanidos.join(", ") : "Nenhum banido";
+            })
+            .catch(error => console.log("Erro ao carregar banidos: ", error));
+    }
 </script>
 
 <!-- <script>

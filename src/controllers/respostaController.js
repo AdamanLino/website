@@ -5,7 +5,7 @@ function publicar(req, res) {
     var fktopico = req.body.fktopico;
     var email = req.body.email;
     var fkusuario = req.params.idUsuario;
-    
+
     if (!comentario || !fktopico || !fkusuario) {
         res.status(400).send("Campos obrigatórios não informados");
         return;

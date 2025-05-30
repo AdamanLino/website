@@ -1,132 +1,213 @@
-create database EcoDrain;
-use EcoDrain;
+-- criação da database
+create database sonicfansite;
 
-CREATE TABLE logradouro (
-	idLogradouro INT NOT NULL ,
-    estado CHAR(2) NOT NULL ,
-    cidade VARCHAR(25) NOT NULL ,
-    PRIMARY KEY (idlogradouro));
+use sonicfansite;
 
-CREATE TABLE empresa (
-    idEmpresa INT NOT NULL  AUTO_INCREMENT,
-    nome VARCHAR(45)   ,
-    cnpj CHAR(14)   ,
-    email VARCHAR(64)   ,
-    num_tel CHAR(11)   ,
-    num_cel CHAR(11)   ,
-    fklogradouro INT NOT NULL ,
-    PRIMARY KEY (idEmpresa),
-    CONSTRAINT fk_empresa_logradouro1 FOREIGN KEY (fklogradouro) REFERENCES logradouro (idlogradouro)
-  );
+-- criação das tabelas
+create table permissao (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    tipo varchar(45) NOT NULL,
+    constraint chk_tipo check (tipo in ('administrador', 'moderador', 'membro'))
+);
 
-CREATE TABLE endereco (
-	idEndereco INT NOT NULL AUTO_INCREMENT,
-    fkEmpresa INT NOT NULL ,
-    cep CHAR(8),
-    nome_rua VARCHAR(100),
-    bairro VARCHAR(45),
-    zonas int NOT NULL check( zonas in(1, 2, 3, 4)),
-    PRIMARY KEY (idEndereco),
-    CONSTRAINT fk_endereco_empresa1 FOREIGN KEY (fkEmpresa) REFERENCES empresa (idEmpresa),
-    CONSTRAINT fk_endereco_endereco1 FOREIGN KEY (zonas) REFERENCES endereco (idEndereco)
-  );
+-- insere as permissões na tabela
+insert into permissao (tipo) 
+	values('administrador'),
+	      ('moderador'),
+		  ('membro');
 
-CREATE TABLE bueiro (
-	idBueiro INT NOT NULL AUTO_INCREMENT,
-    tamanho DECIMAL(5,2) NOT NULL ,
-    fkEndereco INT NOT NULL ,
-    PRIMARY KEY (idBueiro),
-    INDEX fkEndereco (fkEndereco ASC) VISIBLE,
-    CONSTRAINT bueiro_ibfk_1 FOREIGN KEY (fkEndereco) REFERENCES endereco (idEndereco)
-  );
+create table usuario (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nome varchar(80) NOT NULL,
+    email varchar(80) NOT NULL,
+    senha varchar(80) NOT NULL,
+    situacao ENUM('ativo', 'banido') NOT NULL DEFAULT 'ativo',
+    dtCriacao datetime NOT NULL DEFAULT(now()),
+    fkpermissao INT NOT NULL DEFAULT 3,
+    FOREIGN KEY (fkpermissao) references permissao(id)
+);
 
-CREATE TABLE sensor (
-	idSensor INT NOT NULL  AUTO_INCREMENT,
-    data_instalacao DATE,
-    fkBueiro INT NOT NULL,
-    PRIMARY KEY (idSensor),
-    CONSTRAINT fk_sensor_bueiro1 FOREIGN KEY (fkBueiro) REFERENCES bueiro (idBueiro)
-  );
+create table topico (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email varchar(80),
+    assunto varchar(100) NOT NULL,
+	comentario varchar (280) NOT NULL,
+    dtCriacao datetime not null default(now()),
+    fkusuario INT NOT NULL,
+    FOREIGN KEY (fkusuario) references usuario(id)
+);
+    
+create table mensagem (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email varchar(80),
+	comentario varchar (280) NOT NULL,
+    dtCriacao datetime not null default(now()),
+    fktopico INT NOT NULL,
+    fkusuario INT NOT NULL,
+    FOREIGN KEY (fktopico) references topico(id),
+    FOREIGN KEY (fkusuario) references usuario(id)
+);
 
-CREATE TABLE lotacao (
-    idLotacao INT NOT NULL  AUTO_INCREMENT,
-    fkSensor INT,
-    altura_lixo DECIMAL(10,2)   ,
-    data_monitoramento TIMESTAMP   ,
-    PRIMARY KEY (idLotacao, fkSensor),
-	FOREIGN KEY (fkSensor) REFERENCES sensor (idSensor)
-  );
+create table enquete (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    pergunta varchar(280) NOT NULL,
+    dtCriacao datetime not null default(now())
+);
 
-CREATE TABLE usuario (
-    idUsuario INT NOT NULL  AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
-    senha VARCHAR(12) NOT NULL,
-    email VARCHAR(64) NOT NULL,
-    fkEmpresa INT,
-    PRIMARY KEY (idUsuario),
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa (idEmpresa)
-  );
+create table alternativa (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  texto varchar(280),
+  fkenquete int,
+  foreign key (fkenquete) references enquete(id)
+);
 
-CREATE TABLE alerta (
-	idAlerta INT NOT NULL AUTO_INCREMENT,
-    descricao VARCHAR(45) NOT NULL ,
-    alertacol VARCHAR(45) ,
-    fkLotacao INT NOT NULL ,
-    fkSensor INT,
-    PRIMARY KEY (idalerta, fkLotacao, fkSensor),
-    CONSTRAINT fk_alerta_lotacao1 FOREIGN KEY (fkLotacao , fkSensor) REFERENCES lotacao (idLotacao , fkSensor)
-  );
+create table usuarioEnquete (
+	fkusuario int NOT NULL,
+    fkalternativa int NOT NULL,
+    primary key(fkusuario, fkalternativa),
+    foreign key (fkusuario) references usuario(id),
+    foreign key (fkalternativa) references alternativa(id),
+    unique (fkusuario, fkalternativa) -- somente um usuario pode votar na enquete
+);
 
--- SELECTS PARA A DASHBOARD
--- SELECT DO GRÁFICO DO NÍVEL DO LIXO
-SELECT  b.idBueiro, l.altura_lixo, l.data_monitoramento, e.nome_rua
-FROM lotacao l
-INNER JOIN sensor s ON l.fkSensor = s.idSensor
-INNER JOIN bueiro b ON s.fkBueiro = b.idBueiro
-INNER JOIN endereco e ON b.fkEndereco = e.idEndereco;
+-- inserts
+insert into usuario (nome, email, senha, dtCriacao, fkpermissao) 
+	values('admin', 'admin@admin.com', 'admin', now(), 1), -- administrador
+		  ('TailsFan', 'tailsfan@outlook.com', 'senhaMariana123', now(), 2), -- moderador
+		  ('Gabriel Echidna', 'gabriel@gmail.com', 'senhaGabrie123', now(), 3), -- membro
+		  ('Ana Rose', 'ana@protonmail.me', 'senhaAna123', now(), 3), -- membro
+		  ('Rafael ShadowX', 'rafael@gmail.com', 'senhaRafael23', now(), 3), -- membro
+          ('SonicN1Fan', 'sonic@gmail.com', '123', now(), 3); -- membro
 
--- DESABILITA A FOREIGN KEY E DÁ UM TRUNCATE NA TABELA
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE lotacao;
-SET FOREIGN_KEY_CHECKS = 1;
+insert into topico (assunto, comentario, dtCriacao, fkusuario) 
+	values ('Melhor fase do Sonic?', 'Na minha opinião, Green Hill Zone é a melhor fase até hoje!', now(), 1),
+		   ('Como derrotar o Dr. Eggman?', 'Alguém tem dicas de estratégias contra o Eggman no Sonic Adventure?', now(), 2),
+		   ('Super Sonic ou Hyper Sonic?', 'Qual a melhor forma do Sonic e por quê?', now(), 4);
 
--- INSERTS PARA TESTE
--- 1. Inserir logradouro
-INSERT INTO logradouro (idLogradouro, estado, cidade)
-VALUES (1, 'SP', 'São Paulo');
+insert into mensagem (comentario, dtCriacao, fktopico, fkusuario) 
+	values('Concordo! A melhor fase do Sonic até hoje é a Green Hill Zone ela é lendária!', now(), 1, 2),
+		  ('Use o homing attack na hora certa e desvie rápido dos mísseis.', now(), 2, 3),
+		  ('Eu prefiro o Hyper Sonic, mas ele não é canônico e só aparece no Sonic 3 & Knuckles.', now(), 3, 5),
+		  ('Super Sonic é mais clássico e fácil de conseguir.', now(), 3, 1);
 
--- 2. Inserir empresa
-INSERT INTO empresa (idEmpresa, nome, cnpj, email, num_tel, num_cel, fklogradouro)
-VALUES (1, 'Empresa Exemplo', '12345678000199', 'empresa@exemplo.com', '1133445566', '11988887777', 1);
+insert into enquete (pergunta) 
+	values ('Qual a sua fase favorita do Sonic?'),
+		   ('Qual seu personagem preferido da franquia Sonic?'),
+		   ('Qual a sua super forma do Sonic favorita?');
 
--- 3. Inserir endereco
-INSERT INTO endereco (idEndereco, fkEmpresa, cep, nome_rua, bairro, zonas)
-VALUES (1, 1, '12345678', 'Rua Exemplo', 'Centro', 1);
+insert into alternativa (texto, fkenquete) 
+	values ('Green Hill Zone', 1),
+		   ('Chemical Plant Zone', 1),
+		   ('Sky Sanctuary', 1),
+		   ('Stardust Speedway', 1);
 
--- 4. Inserir bueiro
-INSERT INTO bueiro (idBueiro, tamanho, fkEndereco)
-VALUES (1, 50.00, 1);
+insert into alternativa (texto, fkenquete) 
+	values ('Sonic', 2),
+		   ('Tails', 2),
+		   ('Knuckles', 2),
+		   ('Shadow', 2),
+		   ('Amy', 2),
+		   ('Dr. Eggman', 2);
 
--- 5. Inserir sensor
-INSERT INTO sensor (idSensor, data_instalacao, fkBueiro)
-VALUES (1, '2024-06-10', 1);
+insert into alternativa (texto, fkenquete) 
+	values ('Super Sonic', 3),
+		   ('Hyper Sonic', 3),
+		   ('Werehog', 3);
 
--- 6. Inserir lotacao
-INSERT INTO lotacao (idLotacao, fkSensor, altura_lixo, data_monitoramento)
-VALUES (1, 1, 30, CURRENT_TIMESTAMP);
 
--- 7. Inserir alerta vinculado à lotacao e sensor
-INSERT INTO alerta (idAlerta, descricao, alertacol, fkLotacao, fkSensor)
-VALUES (1, 'Nível de lixo alto', 'vermelho', 1, 1);
--- INSERINDO MAIS DADOS NA TABELA LOTACAO
-INSERT INTO lotacao (idLotacao, fkSensor, altura_lixo, data_monitoramento)
+-- para banir um usuário diretamente do BD
+update usuario set situacao = 'banido' where id = 4;
+
+-- selects
+-- mostra os dados dos usuários e seus cargos
+select * 
+from usuario usu
+inner join permissao per
+on per.id = usu.fkpermissao;
+
+-- mostra os tópicos e seus respectivos criadores
+select top.assunto Assunto, usu.nome as 'Postador Original'
+from topico top
+inner join usuario usu
+on usu.id = top.fkusuario;
+
+-- mostra os tópicos e suas menssagems
+select top.assunto, top.comentario, men.comentario
+from topico top
+inner join mensagem men
+on top.id = men.fktopico;
+
+-- mostra as enquetes
+select * from enquete;
+
+-- selects da dashboard
+-- gráfico de total de postagens por tópico
+SELECT t.assunto, count(m.comentario) AS total_mensagens
+FROM topico t
+LEFT JOIN mensagem m ON t.id = m.fktopico
+GROUP BY t.id, t.assunto
+HAVING total_mensagens <= 5;
+
+-- gráfico de total de mensagens por usuário
+SELECT u.nome,
+	count(m.comentario) as total_comentarios
+from usuario u
+inner join mensagem m on u.id = m.fkusuario
+group by u.nome
+order by total_comentarios desc;
+
+-- grafico de novas postagens
+SELECT t.assunto,
+    DATE_FORMAT(dtCriacao, '%H:00') AS hora,
+    COUNT(*) AS total_posts
+FROM topico t
+GROUP BY hora;
+
+-- gráfico de novas mensagens
+SELECT m.comentario,
+    DATE_FORMAT(dtCriacao, '%H:00') AS hora,
+    COUNT(*) AS total_mensagens
+FROM mensagem m
+GROUP BY hora;
+
+-- gráfico do total de votos na enquete
+SELECT a.texto, 
+	COUNT(ue.fkusuario) AS total_votos
+FROM alternativa a
+LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
+WHERE a.fkenquete = 2
+GROUP BY a.id, a.texto;
+
+-- TESTES
+-- Inserções de mensagens em horários diferentes para popular o gráfico
+INSERT INTO mensagem (comentario, dtCriacao, fktopico, fkusuario) VALUES
+('Concordo com tudo que foi dito!', STR_TO_DATE('2025-05-24 08:10:00', '%Y-%m-%d %H:%i:%s'), 1, 2),
+('Realmente, o design dessa fase é impecável.', STR_TO_DATE('2025-05-24 08:45:00', '%Y-%m-%d %H:%i:%s'), 1, 3),
+('Nunca tinha pensado por esse lado.', STR_TO_DATE('2025-05-24 09:15:00', '%Y-%m-%d %H:%i:%s'), 2, 4),
+('Alguém já jogou Sonic Battle?', STR_TO_DATE('2025-05-24 10:30:00', '%Y-%m-%d %H:%i:%s'), 3, 5),
+('Sim! E é muito bom!', STR_TO_DATE('2025-05-24 10:55:00', '%Y-%m-%d %H:%i:%s'), 3, 1),
+('Vale a pena usar escudo elemental?', STR_TO_DATE('2025-05-24 11:20:00', '%Y-%m-%d %H:%i:%s'), 2, 6),
+('Minha fase favorita é a Stardust Speedway!', STR_TO_DATE('2025-05-24 12:05:00', '%Y-%m-%d %H:%i:%s'), 1, 3),
+('O final do Sonic Adventure é emocionante!', STR_TO_DATE('2025-05-24 13:45:00', '%Y-%m-%d %H:%i:%s'), 2, 4),
+('Hyper Sonic deveria voltar!', STR_TO_DATE('2025-05-24 14:15:00', '%Y-%m-%d %H:%i:%s'), 3, 2);
+
+-- Inserções manuais com horários diferentes
+INSERT INTO topico (assunto, comentario, dtCriacao, fkusuario)
 VALUES 
-(2, 1, 25.75, CURRENT_TIMESTAMP),
-(3, 1, 10.25, '2025-05-25 08:30:00'),
-(4, 1, 15.50, '2025-05-25 12:00:00'),
-(5, 1, 20.75, '2025-05-26 09:15:00'),
-(6, 1, 28.00, '2025-05-26 13:45:00'),
-(7, 1, 35.25, '2025-05-27 07:00:00'),
-(8, 1, 40.00, '2025-05-27 10:30:00'),
-(9, 1, 45.75, '2025-05-27 14:00:00'),
-(10, 1, 48.50, '2025-05-28 06:45:00');
+('Melhor jogo 2D do Sonic?', 'Sonic CD é muito estiloso.', STR_TO_DATE('2025-05-24 08:15:00', '%Y-%m-%d %H:%i:%s'), 3),
+('Vale a pena jogar Sonic Forces?', 'Achei divertido, mas meio fácil.', STR_TO_DATE('2025-05-24 09:30:00', '%Y-%m-%d %H:%i:%s'), 4),
+('OST favorita?', 'A trilha sonora do Sonic Rush é absurda!', STR_TO_DATE('2025-05-24 10:45:00', '%Y-%m-%d %H:%i:%s'), 5),
+('Sonic Generations ou Unleashed?', 'Ambos são ótimos, mas prefiro Generations.', STR_TO_DATE('2025-05-24 10:55:00', '%Y-%m-%d %H:%i:%s'), 2),
+('Curiosidades sobre o Knuckles', 'Sabia que ele foi criado como rival?', STR_TO_DATE('2025-05-24 12:05:00', '%Y-%m-%d %H:%i:%s'), 3),
+('Melhor vilão?', 'O Metal Sonic é o mais icônico.', STR_TO_DATE('2025-05-24 13:20:00', '%Y-%m-%d %H:%i:%s'), 6),
+('Sonic Frontiers é bom?', 'Gameplay diferente, mas muito bom!', STR_TO_DATE('2025-05-24 13:50:00', '%Y-%m-%d %H:%i:%s'), 1),
+('Preferem jogos 2D ou 3D?', 'Sinto que o 2D tem mais charme!', STR_TO_DATE('2025-05-24 14:00:00', '%Y-%m-%d %H:%i:%s'), 4);
+/*
+select * from topico;
+select * from mensagem;
+insert into topico(assunto, comentario, fkusuario)
+	values ('Assuntos variados', 'Comentario top', 4);
+
+select * from usuario;
+insert into mensagem (comentario, dtCriacao, fktopico, fkusuario) 
+	values('TESTE DE RESPOSTA', now(), 4, 5);

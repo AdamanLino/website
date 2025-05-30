@@ -90,11 +90,23 @@ function deletar(id) {
     return database.executar(instrucaoSql);
 }
 
+function listarUsuarios(situacao) {
+    var instrucaoSql = `
+        SELECT u.nome, p.tipo, u.situacao
+        FROM usuario u
+        INNER JOIN permissao p ON u.fkpermissao = p.id
+        WHERE u.situacao = '${situacao}'`;
+
+    console.log("Executando SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     listar,
     listarPorUsuario,
     pesquisarDescricao,
     publicar,
     editar,
-    deletar
+    deletar,
+    listarUsuarios
 }
