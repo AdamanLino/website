@@ -13,7 +13,6 @@ body {
     justify-content: space-around;
     align-items: center;
     background-color: #04367d;
-
     margin-top: -16px;
 }
 
@@ -22,13 +21,11 @@ body {
     justify-content: space-evenly;
     align-items: center;
     list-style-type: none;
-
     background-color: #064BAE;
     border: 2px solid #01183a;
     border-radius: 10px;
     width: 220px;
     height: 50px;
-
 }
 
 .caixa_cadastro:hover {
@@ -84,13 +81,24 @@ body {
 
 .texto {
     padding: 6px;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     text-align: justify;
     color: white;
     background-image: url(../assets/imgs/background-text.jpg);
     background-size: auto;
     border: none;
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    font-size: 25px;
+}
+
+.imagem-texto img {
+    width: 530px;
+    height: 380px;
+}
+
+.jogos {
+    display: flex;
+    height: 200px;
 }
 
 /* TELA CADASTRO */
@@ -354,6 +362,34 @@ body {
     width: 100%;
     background-color: #01183a;
     color: white;
+}
+
+/* TELA DO JOGAR */
+.container-jogos {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.ring-clicker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 450px;
+    height: 280px;
+    background-color: #064bae;
+    color: white;
+    text-decoration: underline;
+}
+
+.ring-clicker:hover {
+    cursor: pointer;
+}
+
+.ring-clicker img {
+    width: 300px;
+    height: 200px;
 }
 
 /* TELA DO RING CLICKER */
