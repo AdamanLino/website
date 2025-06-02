@@ -29,4 +29,7 @@ router.delete("/deletar/:idAviso", function (req, res) {
 
 router.get("/listarKpi", avisoController.listarUsuarios);
 
+router.get("/listarPorTopico/:idTopico", function (req, res) {
+    avisoController.listarPorTopico(req, res);
+});
 module.exports = router;

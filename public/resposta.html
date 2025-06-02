@@ -12,7 +12,7 @@
     <script src="./js/alerta.js"></script>
 </head>
 
-<body onload="mostrarPostagem()">
+<body onload="mostrarPostagem(), atualizarFeed()">
     <!-- HEADER -->
     <header>
         <div class="header">
@@ -41,6 +41,7 @@
     </header>
 
     <div class="container-mensagem" id="postagem"></div>
+    <div id="feed" class="container-mensagem"></div>
     <div id="feed_container" class="feed-container">
 
         <div class="container-forum">
@@ -67,6 +68,7 @@
         <input type="hidden" id="id_topico" value="">
 </body>
 <script>
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
     var idTopico = sessionStorage.getItem("ID_TOPICO");
     if (sessionStorage.ID_USUARIO) {
         document.querySelector('.caixa_cadastro').style.display = 'none';
@@ -74,26 +76,50 @@
         document.querySelector('.usuario').style.display = 'none';
     }
 
+    function atualizarFeed() {
+        const idTopico = sessionStorage.getItem("POST_ID");
+
+        if (!idTopico) {
+            console.error("ID do tópico não encontrado.");
+            return;
+        }
+
+        const container = document.getElementById("feed");
+        container.innerHTML = "<em>Carregando respostas...</em>";
+
+        fetch(`/avisos/listarPorTopico/${idTopico}`)
+            .then(res => res.json())
+            .then(respostas => {
+                if (respostas.length > 0) {
+                    container.innerHTML = respostas.map(r =>
+                        `<p><strong>${r.nome}:</strong> ${r.comentario}</p>`
+                    ).join("");
+                } else {
+                    container.innerHTML = "<p><em>Sem respostas ainda.</em></p>";
+                }
+            })
+            .catch(err => {
+                console.error("Erro ao carregar respostas:", err);
+                container.innerHTML = "<p>Erro ao carregar respostas.</p>";
+            });
+    }
+
     function mostrarPostagem() {
         const titulo = sessionStorage.getItem("POST_TITULO");
         const descricao = sessionStorage.getItem("POST_DESCRICAO");
-        const idTopico = sessionStorage.getItem("POST_ID");  // Recuperando o ID do tópico da sessionStorage
+        const idTopico = sessionStorage.getItem("POST_ID");
 
-        // Verificando se o ID do tópico está presente
         if (idTopico) {
-            // Exibe o título e a descrição no HTML
+
             document.getElementById("postagem").innerHTML = `
             <h3>${titulo}</h3>
             <p>${descricao}</p>`;
 
-            // Atribuindo o ID do tópico ao campo oculto
             document.getElementById("id_topico").value = idTopico;
         } else {
             console.error("ID do Tópico não encontrado na sessionStorage.");
         }
     }
-
-
 
     function enviarResposta() {
         const resposta = document.getElementById("resposta").value;
@@ -125,7 +151,7 @@
         }).then(function (resposta) {
             if (resposta.ok) {
                 alert("Resposta enviada com sucesso!");
-                window.location = "/forum.html";
+                window.location = "/resposta.html";
             } else {
                 alert("Erro ao enviar resposta");
             }

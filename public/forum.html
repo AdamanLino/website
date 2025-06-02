@@ -67,7 +67,7 @@
                 <button>Enviar</button>
             </form>
         </div>
-        
+
         <div class="container-questionario">
             <p>TESTE</p>
             <label for="html">Sonic</label><br>
@@ -204,7 +204,7 @@
                         var btnResponder = document.createElement("button");
                         btnResponder.innerHTML = "Responder";
                         btnResponder.className = "publicacao-btn-responder";
-                        btnResponder.setAttribute("onclick", `responder("${publicacao.assunto}", "${publicacao.comentario}")`);
+                        btnResponder.setAttribute("onclick", `responder(${publicacao.id}, "${publicacao.assunto}", "${publicacao.comentario}")`);
                         divButtons.appendChild(btnResponder);
 
 
@@ -255,7 +255,8 @@
         });
     }
 
-    function responder(titulo, descricao) {
+    function responder(id, titulo, descricao) {
+        sessionStorage.setItem("POST_ID", id);
         sessionStorage.setItem("POST_TITULO", titulo);
         sessionStorage.setItem("POST_DESCRICAO", descricao);
         window.location = "resposta.html";

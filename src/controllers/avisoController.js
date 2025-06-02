@@ -159,9 +159,28 @@ function listarUsuarios(req, res) {
             res.status(500).json(erro.sqlMessage);
         });
 }
+
+function listarPorTopico(req, res) {
+    var idTopico = req.params.idTopico;
+
+    avisoModel.listarPorTopico(idTopico)
+        .then(resposta => {
+            if (resposta.length > 0) {
+                res.status(200).json(resposta);
+            } else {
+                res.status(204).send("Nenhuma mensagem encontrada.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao listar mensagens por tópico:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
 module.exports = {
     listar,
     listarPorUsuario,
+    listarPorTopico,
     pesquisarDescricao,
     publicar,
     editar,

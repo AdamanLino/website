@@ -101,9 +101,26 @@ function listarUsuarios(situacao) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorTopico(idTopico) {
+    var instrucaoSql = `
+        SELECT 
+            m.id,
+            m.comentario,
+            u.nome,
+            u.email
+        FROM mensagem AS m
+        JOIN usuario AS u ON m.fkusuario = u.id
+        WHERE m.fktopico = ${idTopico}
+        ORDER BY m.id ASC;
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     listar,
     listarPorUsuario,
+    listarPorTopico,
     pesquisarDescricao,
     publicar,
     editar,

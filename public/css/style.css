@@ -79,16 +79,25 @@ body {
     background-size: cover;
 }
 
-.texto {
-    padding: 6px;
-    /* margin-top: 15px; */
-    text-align: justify;
-    color: white;
+.texto-container {
     background-image: url(../assets/imgs/background-text.jpg);
+}
+
+.texto-container h3 {
+    color: white;
+    text-align: justify;
     background-size: auto;
-    border: none;
-    /* border-radius: 15px; */
     font-size: 25px;
+}
+
+.texto {
+    max-width: 1000px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    margin: auto;
+    background-color: white;
 }
 
 .imagem-texto img {
@@ -98,6 +107,8 @@ body {
 
 .jogos {
     display: flex;
+    width: fit-content;
+    /* flex-wrap: wrap; */
     height: 200px;
 }
 
