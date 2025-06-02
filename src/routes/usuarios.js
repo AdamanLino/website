@@ -16,4 +16,8 @@ router.get("/listarUsuarios", function (req, res) {
     usuarioController.listarUsuarios(req, res);
 });
 
+router.get("/listarKpi", function (req, res) {
+    usuarioController.listarKpi(req, res);
+});
+
 module.exports = router;

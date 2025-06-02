@@ -70,8 +70,32 @@ function listarUsuarios(req, res) {
         });
 }
 
+function listarKpi(req, res) {
+    usuarioModel.listarUsuarios()
+        .then(resultado => {
+            const membros = [];
+            const moderadores = [];
+
+            resultado.forEach(usuario => {
+                if (usuario.tipo === 'moderador') {
+                    moderadores.push(usuario.nome);
+                } else if (usuario.situacao !== 'banido') {
+                    membros.push(usuario.nome);
+                }
+            });
+            res.json({
+                membros,
+                moderadores
+            });
+        })
+        .catch(erro => {
+            console.error(erro);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
 module.exports = {
     autenticar,
     cadastrar,
+    listarKpi,
     listarUsuarios
 }

@@ -28,8 +28,7 @@ var novasPostagensRouter = require("./src/routes/novasPostagens");
 var novasMensagensRouter = require("./src/routes/novasMensagens");
 var enqueteRouter = require("./src/routes/enquete");
 var respostaController = require("./src/routes/resposta");
-var kpiRouter = require("./src/routes/kpiRoutes")
-app.use(kpiRoutes);
+
 // var empresasRouter = require("./src/routes/empresas");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));

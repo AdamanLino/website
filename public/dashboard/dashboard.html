@@ -49,13 +49,13 @@
 
             <div class="caixas">
                 <div class="caixa-1">
-                    <p>Membros Cadastrados: <span id="kpi_cadastrados">Nenhum membro</span></p>
+                    <p>Membros Cadastrados: <span style="color: yellow;" id="kpi_cadastrados">Nenhum membro</span></p>
                 </div>
                 <div class="caixa-2">
-                    <p>Membros Banidos: <span id="kpi_banidos">Nenhum membro</span></p>
+                    <p>Membros Banidos: <span style="color: yellow;" id="kpi_banidos">Nenhum membro</span></p>
                 </div>
                 <div class="caixa-3">
-                    <p>Moderadores: <span id="kpi_moderadores">Nenhum membro</span></p>
+                    <p>Moderadores: <span style="color: yellow;" id="kpi_moderadores">Nenhum membro</span></p>
                 </div>
             </div>
         </div>
@@ -103,17 +103,13 @@
 </html>
 
 <script>
-    let membrosCadastrados = [];
-    let membrosBanidos = [];
-    let moderadores = [];
     function carregarNomes() {
-        // Aqui você vai carregar os dados da API (a partir da resposta)
         fetch('/usuarios/listarKpi')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Erro na requisição: ${response.status}`);
                 }
-                return response.json(); // Convertendo diretamente para JSON
+                return response.json();
             })
             .then(data => {
                 membrosCadastrados = data.membros || [];
@@ -134,38 +130,9 @@
             })
             .catch(error => console.log("Erro ao carregar banidos: ", error));
     }
+
 </script>
 
-<!-- <script>
-    // Exemplo de salvar os nomes dos membros no sessionStorage
-    let membrosCadastrados = ["João", "Maria", "Carlos"];
-    let membrosBanidos = ["Pedro", "Ana"];
-    let moderadores = ["Lucas", "Fernanda"];
-
-    // Salvando os nomes dos membros no sessionStorage
-    sessionStorage.setItem("membrosCadastrados", JSON.stringify(membrosCadastrados));
-    sessionStorage.setItem("membrosBanidos", JSON.stringify(membrosBanidos));
-    sessionStorage.setItem("moderadores", JSON.stringify(moderadores));
-
-    function carregarNomes() {
-        // Recuperando os dados do sessionStorage
-        let membrosCadastrados = JSON.parse(sessionStorage.getItem("membrosCadastrados")) || [];
-        let membrosBanidos = JSON.parse(sessionStorage.getItem("membrosBanidos")) || [];
-        let moderadores = JSON.parse(sessionStorage.getItem("moderadores")) || [];
-
-        // Exibindo os membros cadastrados
-        let membrosCadastradosTexto = membrosCadastrados.length > 0 ? membrosCadastrados.join(", ") : "Nenhum membro";
-        document.getElementById("kpi_cadastrados").innerText = membrosCadastradosTexto;
-
-        // Exibindo os membros banidos
-        let membrosBanidosTexto = membrosBanidos.length > 0 ? membrosBanidos.join(", ") : "Nenhum membro";
-        document.getElementById("kpi_banidos").innerText = membrosBanidosTexto;
-
-        // Exibindo os moderadores
-        let moderadoresTexto = moderadores.length > 0 ? moderadores.join(", ") : "Nenhum membro";
-        document.getElementById("kpi_moderadores").innerText = moderadoresTexto;
-    }
-</script> -->
 <!-- Para deslogar da sessao -->
 <script src="../js/sessao.js"></script>
 

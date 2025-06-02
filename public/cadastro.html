@@ -78,7 +78,7 @@
 </html>
 <script>
     function cadastrar() {
-        // Agora vá para o método fetch logo abaixo
+        // Recupere o valor dos campos do formulário
         var nomeVar = ipt_nome.value;
         var emailVar = ipt_email.value;
         var senhaVar = ipt_senha.value;
@@ -110,15 +110,13 @@
             setInterval(sumirMensagem, 5000);
         }
 
-        // Enviando o valor da nova input
+        // Enviando os dados para o servidor
         fetch("/usuarios/cadastrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
                 nomeServer: nomeVar,
                 emailServer: emailVar,
                 senhaServer: senhaVar,
