@@ -12,7 +12,7 @@
     <script src="./js/alerta.js"></script>
 </head>
 
-<body onload="validarSessao(), atualizarFeed()">
+<body onload="validarSessao(), atualizarFeed(), onloadEsconder()">
     <!-- HEADER -->
     <header>
         <div class="header">
@@ -67,16 +67,62 @@
                 <button>Enviar</button>
             </form>
         </div>
-
         <div class="container-questionario">
-            <p>TESTE</p>
-            <label for="html">Sonic</label><br>
-            <input type="radio" id="html" name="fav_language" value="HTML">
-            <input type="radio" id="css" name="fav_language" value="CSS">
-            <label for="css">CSS</label><br>
-            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-            <label for="javascript">JavaScript</label>
+            <div id="pontuacaoEJogo">
+                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+                <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+                    <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                    </div>
+                    <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                    </div>
+                </div>
+
+                <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+                    <div id="infoQuestao" class="padding-8">
+                        <span>Questionário atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span
+                                id="qtdQuestoes"></span>
+                            questionários.</span>
+                    </div>
+
+                    <div id="perguntaDaQuestaoAtual" class="padding-8">
+                        <span id="spanQuestaoExibida" class="text-bold"></span>
+                    </div>
+
+                    <div id="infoAlternativas" class="padding-8">
+                        <span><em>Escolha uma opção dentre as abaixo:</em></span>
+                    </div>
+
+                    <div id="opcoes" class="flex-colunar padding-8">
+                        <span>
+                            <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                            <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                            <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                            <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                            <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                        </span>
+                    </div>
+
+                    <div id="botoes" class="flex-colunar padding-8">
+                        <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                        <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                        <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                    </div>
+
+                </div>
+            </div>
         </div>
+
         <div class="container-posts">
             <h1>Últimos Posts</h1>
             <div id="feed_container" class="feed-container">
@@ -93,7 +139,6 @@
 </html>
 
 <script>
-
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     if (sessionStorage.ID_USUARIO) {
@@ -260,5 +305,160 @@
         sessionStorage.setItem("POST_TITULO", titulo);
         sessionStorage.setItem("POST_DESCRICAO", descricao);
         window.location = "resposta.html";
+    }
+</script>
+
+<!-- SCRIPT DO QUESTIONÁRIO -->
+<script>
+    const listaDeQuestoes = [
+        {
+            pergunta: "Qual a sua fase favorita do Sonic?",
+            alternativaA: "Green Hill Zone",
+            alternativaB: "Chemical Plant Zone",
+            alternativaC: "Sky Sanctuary",
+            alternativaD: "Stardust Speedway",
+        },
+        {
+            pergunta: "Qual seu personagem preferido da franquia Sonic?",
+            alternativaA: "Sonic",
+            alternativaB: "Tails",
+            alternativaC: "Knuckles",
+            alternativaD: "Shadow",
+        },
+        {
+            pergunta: "Qual a sua super forma do Sonic favorita?",
+            alternativaA: "Super Sonic",
+            alternativaB: "Hyper Sonic",
+            alternativaC: "Werehog"
+        }
+    ]
+
+    let numeroDaQuestaoAtual = 0
+    let quantidadeDeQuestoes = listaDeQuestoes.length
+    let respostasSelecionadas = new Array(quantidadeDeQuestoes).fill(null)
+
+    function onloadEsconder() {
+        document.getElementById('pontuacao').style.display = "none"
+        document.getElementById('jogo').style.display = "none"
+    }
+
+    function iniciarQuiz() {
+        document.getElementById('pontuacao').style.display = "flex"
+        document.getElementById('jogo').style.display = "flex"
+        document.getElementById('btnIniciarQuiz').style.display = "none"
+
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+    }
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA ?? '';
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB ?? '';
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC ?? '';
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD ?? '';
+    }
+
+    function submeter() {
+        const options = document.getElementsByName("option");
+        let respostaEscolhida = null;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                respostaEscolhida = options[i].value;
+                break;
+            }
+        }
+
+        if (!respostaEscolhida) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.");
+            return;
+        }
+
+        respostasSelecionadas[numeroDaQuestaoAtual] = respostaEscolhida;
+
+        btnSubmeter.disabled = true
+        btnProx.disabled = false
+        habilitarAlternativas(false)
+    }
+
+    function habilitarAlternativas(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcao.disabled = opcaoEscolhida
+        segundaOpcao.disabled = opcaoEscolhida
+        terceiraOpcao.disabled = opcaoEscolhida
+        quartaOpcao.disabled = opcaoEscolhida
+    }
+
+    function avancar() {
+        btnProx.disabled = true
+        btnSubmeter.disabled = false
+
+        desmarcarRadioButtons()
+        numeroDaQuestaoAtual++;
+
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
+    }
+
+    function tentarNovamente() {
+        window.location.reload()
+    }
+
+    function limparCoresBackgroundOpcoes() {
+        const options = document.getElementsByName("option");
+        options.forEach((option) => {
+            const label = option.labels[0];
+            if (label) {
+                label.classList.remove("text-danger-with-bg")
+                label.classList.remove("text-success-with-bg")
+            }
+        })
+    }
+
+    function desmarcarRadioButtons() {
+        const options = document.getElementsByName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].checked = false;
+        }
+    }
+
+    function finalizarJogo() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch("/resposta/votar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuario: idUsuario,
+                respostasSelecionadas: respostasSelecionadas
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Respostas salvas com sucesso:", data);
+                alert("Obrigado por participar!");
+            })
+            .catch(error => {
+                console.error("Erro ao salvar respostas:", error);
+            });
+
+        btnProx.disabled = true;
+        btnSubmeter.disabled = true;
     }
 </script>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash</title>
+    <script src="./js/flash.js"></script>
+    <link rel="shortcut icon" href="assets/imgs/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header">
+            <div class="logo">
+                <a href="index.html"><img src="./assets/imgs/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="caixa_cadastro">
+                <a href="cadastro.html">
+                    <li>Cadastro</li>
+                </a>
+                <a href="login.html">
+                    <li>Login</li>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav">
+        <nav>
+            <ul>
+                <a href="jogos.html">
+                    <li>Jogar</li>
+                </a>
+                <a href="desenhos.html">
+                    <li>Desenhos</li>
+                </a>
+                <a href="historia.html">
+                    <li>História</li>
+                </a>
+                <a href="sobre.html">
+                    <li>Sobre Mim</li>
+                </a>
+                <a href="forum.html">
+                    <li>Fórum</li>
+                </a>
+            </ul>
+        </nav>
+    </div>
+
+    <div id='ruffle' class="gameloc"></div>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <script src="./ruffle-nightly-2025_05_31-web-selfhosted/ruffle.js"></script>
+    <script id="gabe">swfobject.embedSWF("./flashfiles/ultimate-flash-sonic.swf", 'ruffle', 800, 600);</script>
+</body>
+
+</html>

@@ -1,7 +1,6 @@
 var database = require("../database/config");
 
 function buscarUltimosVotos() {
-
     var instrucaoSql = `
     SELECT e.pergunta, a.texto,
 	    COUNT(ue.fkusuario) AS total_votos
@@ -15,6 +14,15 @@ function buscarUltimosVotos() {
     return database.executar(instrucaoSql);
 }
 
+function salvarVotos(idUsuario, idAlternativa) {
+    var instrucaoSql = `
+        INSERT INTO usuarioEnquete (fkusuario, fkalternativa)
+        VALUES (?, ?);
+    `;
+    return database.executar(instrucaoSql, [idUsuario, idAlternativa]);
+}
+
 module.exports = {
-    buscarUltimosVotos
+    buscarUltimosVotos,
+    salvarVotos
 };

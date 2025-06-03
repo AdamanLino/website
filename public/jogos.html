@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
+    <title>Jogos</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="assets/imgs/favicon.ico" type="image/x-icon">
+    <script src="./js/flash.js"></script>
 </head>
 
 <body>
@@ -54,23 +55,27 @@
     </div>
 
     <div class="container-jogos">
-        <div class="ring-clicker" onclick="clickRing()">
+        <div class="box-jogo" onclick="window.location.href = 'ringclicker.html'">
+            <p style="color: yellow;">Ring Clicker</p>
             <img src="assets/imgs/ringclicker.png" alt="ring-clicker">
-            <p>Um jogo incremetal. Colete o máximo de anéis que puder!</p>
+            <p>Um jogo incremetal, colete o máximo de anéis que puder!</p>
         </div>
-        <div class="sonic-flash">
-            asd
+
+        <div class="box-jogo" onclick="window.location.href = 'flash.html'">
+            <p style="color: yellow;">Ultimate Sonic Flash</p>
+            <img src="assets/imgs/sonic-flash.webp" alt="sonic-flash">
+            <p>O clássico jogo em flash do Sonic.</p>
         </div>
     </div>
 </body>
 
 </html>
-<script>
+<!-- <script>
     function clickRing() {
         window.location = "ringclicker.html"
     }
 
     function clickFlash() {
-        window.location = "forum.html"
+        window.location = "flash.html"
     }
-</script>
+</script> -->

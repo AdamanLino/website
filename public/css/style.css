@@ -88,13 +88,14 @@ body {
     text-align: justify;
     background-size: auto;
     font-size: 25px;
+    text-align: center;
 }
 
 .texto {
     max-width: 1000px;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     font-size: 18px;
     margin: auto;
     background-color: white;
@@ -351,6 +352,74 @@ body {
     cursor: pointer;
 }
 
+/* QUESTIONARIO */
+.container-forum .container-questionario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    background-color: #01183a;
+    color: white;
+}
+
+#pontuacaoEJogo {
+    background-color: #01183a;
+    border-radius: 15px;
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+.border-primary {
+    border: 3px solid var(--primary-brand-color);
+}
+
+.border-secondary {
+    border: 3px solid var(--secondary-brand-color);
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-success-with-bg {
+    color: var(--success-dark);
+    background-color: var(--success-light);
+}
+
+.text-warning-with-bg {
+    color: var(--warning-dark);
+    background-color: var(--warning-light);
+}
+
+.text-danger-with-bg {
+    color: var(--danger-dark);
+    background-color: var(--danger-light);
+}
+
+.text-new-gray {
+    color: var(--new-gray);
+}
+
 /* TELA DE RESPOSTAS */
 .container-mensagem {
     display: flex;
@@ -364,41 +433,40 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* PARTE DO QUESTIONÁRIO */
-.container-forum .container-questionario {
+/* TELA DO JOGAR */
+.gameloc {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    background-color: #01183a;
-    color: white;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/* TELA DO JOGAR */
 .container-jogos {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin-top: 30px;
 }
 
-.ring-clicker {
+.box-jogo {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 450px;
-    height: 280px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     background-color: #064bae;
     color: white;
     text-decoration: underline;
 }
 
-.ring-clicker:hover {
+.box-jogo:hover {
     cursor: pointer;
 }
 
-.ring-clicker img {
+.box-jogo img {
     width: 300px;
     height: 200px;
 }
