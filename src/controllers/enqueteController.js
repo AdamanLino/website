@@ -12,13 +12,15 @@ function buscarUltimosVotos(req, res) {
 }
 
 function votar(req, res) {
-    const { idUsuario, idAlternativa } = req.body;
+    console.log("Achei!")
+    var id = req.body.id;
+    var alternativa =  req.body.respostasSelecionadas;
 
-    if (!idUsuario || !idAlternativa) {
+    if (!id || !alternativa) {
         return res.status(400).json({ erro: "Dados incompletos." });
     }
 
-    mensagemUsuarioModel.salvarVotos(idUsuario, idAlternativa)
+    mensagemUsuarioModel.salvarVotos(id, alternativa)
         .then(() => {
             res.status(200).json({ mensagem: "Voto registrado com sucesso." });
         })

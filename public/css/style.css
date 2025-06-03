@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+
 * {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Chewy', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -83,14 +85,6 @@ body {
     background-image: url(../assets/imgs/background-text.jpg);
 }
 
-.texto-container h3 {
-    color: white;
-    text-align: justify;
-    background-size: auto;
-    font-size: 25px;
-    text-align: center;
-}
-
 .texto {
     max-width: 1000px;
     padding: 30px;
@@ -109,8 +103,7 @@ body {
 .jogos {
     display: flex;
     width: fit-content;
-    /* flex-wrap: wrap; */
-    height: 200px;
+    height: 150px;
 }
 
 /* TELA CADASTRO */
@@ -434,6 +427,16 @@ button {
 }
 
 /* TELA DO JOGAR */
+
+.header-jogos {
+    background-image: url(../assets/imgs/background-text.jpg);
+    color: white;
+    text-align: justify;
+    background-size: auto;
+    font-size: 25px;
+    text-align: center;
+}
+
 .gameloc {
     display: flex;
     justify-content: center;

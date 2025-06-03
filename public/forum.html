@@ -9,7 +9,7 @@
     <title>Fórum</title>
     <link rel="stylesheet" href="./css/style.css" />
     <script src="./js/sessao.js"></script>
-    <script src="./js/alerta.js"></script>
+    <!-- <script src="./js/alerta.js"></script> -->
 </head>
 
 <body onload="validarSessao(), atualizarFeed(), onloadEsconder()">
@@ -96,19 +96,19 @@
 
                     <div id="opcoes" class="flex-colunar padding-8">
                         <span>
-                            <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                            <input type="radio" id="primeiraOpcao" name="option" class="radio" value=1 />
                             <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
                         </span>
                         <span>
-                            <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                            <input type="radio" id="segundaOpcao" name="option" class="radio" value=2 />
                             <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
                         </span>
                         <span>
-                            <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                            <input type="radio" id="terceiraOpcao" name="option" class="radio" value=3 />
                             <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
                         </span>
                         <span>
-                            <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                            <input type="radio" id="quartaOpcao" name="option" class="radio" value=4 />
                             <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
                         </span>
                     </div>
@@ -329,7 +329,8 @@
             pergunta: "Qual a sua super forma do Sonic favorita?",
             alternativaA: "Super Sonic",
             alternativaB: "Hyper Sonic",
-            alternativaC: "Werehog"
+            alternativaC: "Werehog",
+            alternativaD: "Sonic Exe"
         }
     ]
 
@@ -385,6 +386,8 @@
 
         respostasSelecionadas[numeroDaQuestaoAtual] = respostaEscolhida;
 
+        console.log(respostasSelecionadas)
+
         btnSubmeter.disabled = true
         btnProx.disabled = false
         habilitarAlternativas(false)
@@ -437,19 +440,25 @@
     }
 
     function finalizarJogo() {
-        const idUsuario = sessionStorage.ID_USUARIO;
+        let id = sessionStorage.getItem("ID_USUARIO");
 
-        fetch("/resposta/votar", {
+        console.log(id)
+        console.log(respostasSelecionadas);
+
+        fetch("/enquete/votar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                idUsuario: idUsuario,
+                id: id,
                 respostasSelecionadas: respostasSelecionadas
             })
         })
-            .then(res => res.json())
+            // .then(function (response) {
+            //     console.log(response);
+            // })
+            // .then(res => res.json())
             .then(data => {
                 console.log("Respostas salvas com sucesso:", data);
                 alert("Obrigado por participar!");

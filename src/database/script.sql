@@ -118,6 +118,7 @@ insert into alternativa (texto, fkenquete)
 -- para banir um usuário diretamente do BD
 update usuario set situacao = 'banido' where id = 4;
 
+select * from enquete;
 -- selects
 -- mostra os dados dos usuários e seus cargos
 select * 
@@ -171,7 +172,7 @@ FROM mensagem m
 GROUP BY hora;
 
 -- gráfico do total de votos na enquete
-SELECT a.texto, 
+SELECT a.texto,
 	COUNT(ue.fkusuario) AS total_votos
 FROM alternativa a
 LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
@@ -179,6 +180,15 @@ WHERE a.fkenquete = 2
 GROUP BY a.id, a.texto;
 
 -- TESTES
+-- Votos dos usuários na enquete 2
+INSERT INTO usuarioEnquete (fkusuario, fkalternativa) VALUES
+(1, 5), -- admin vota em Sonic
+(2, 6), -- TailsFan vota em Tails
+(3, 7), -- Gabriel vota em Knuckles
+(4, 5), -- Ana vota em Sonic
+(5, 8), -- Rafael vota em Shadow
+(6, 5); -- SonicN1Fan vota em Sonic
+
 -- Inserções de mensagens em horários diferentes para popular o gráfico
 INSERT INTO mensagem (comentario, dtCriacao, fktopico, fkusuario) VALUES
 ('Concordo com tudo que foi dito!', STR_TO_DATE('2025-05-24 08:10:00', '%Y-%m-%d %H:%i:%s'), 1, 2),

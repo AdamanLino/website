@@ -15,11 +15,16 @@ function buscarUltimosVotos() {
 }
 
 function salvarVotos(idUsuario, idAlternativa) {
+    console.log(idAlternativa);
+
     var instrucaoSql = `
-        INSERT INTO usuarioEnquete (fkusuario, fkalternativa)
-        VALUES (?, ?);
+    INSERT INTO usuarioEnquete (fkusuario, fkalternativa)
+    VALUES (${idUsuario}, ${idAlternativa[0]}),
+    (${idUsuario}, ${idAlternativa[1]}),
+    (${idUsuario}, ${idAlternativa[2]});
     `;
     return database.executar(instrucaoSql, [idUsuario, idAlternativa]);
+
 }
 
 module.exports = {

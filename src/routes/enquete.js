@@ -7,6 +7,7 @@ router.get("/ultimos", function (req, res) {
     votosController.buscarUltimosVotos(req, res);
 });
 
-router.post("/votar", votosController.votar);
-
+router.post("/votar", function (req, res) {
+    votosController.votar(req, res);
+});
 module.exports = router;

@@ -47,6 +47,7 @@ app.use("/votos", enqueteRouter);
 app.use("/mensagensUsuario", mensagemUsuarioRouter);
 // app.use("/empresas", empresasRouter);
 app.use("/resposta", respostaController);
+app.use("/enquete", enqueteRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
