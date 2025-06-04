@@ -2,13 +2,19 @@ var database = require("../database/config");
 
 function buscarUltimosVotos() {
     var instrucaoSql = `
-    SELECT e.pergunta, a.texto,
-	    COUNT(ue.fkusuario) AS total_votos
-    FROM alternativa a
-    INNER JOIN enquete e ON a.fkenquete = e.id
+    SELECT 
+        e.id AS enquete_id,
+        e.pergunta AS pergunta,
+        a.texto AS alternativa,
+        COUNT(ue.fkusuario) AS total_votos
+    FROM enquete e
+    LEFT JOIN alternativa a ON e.id = a.fkenquete
     LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
-    WHERE a.fkenquete = 2
-    GROUP BY a.id, a.texto;`
+    WHERE 
+    e.id = 1
+        GROUP BY 
+    e.id, e.pergunta, a.id, a.texto;
+    `
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -19,9 +25,7 @@ function salvarVotos(idUsuario, idAlternativa) {
 
     var instrucaoSql = `
     INSERT INTO usuarioEnquete (fkusuario, fkalternativa)
-    VALUES (${idUsuario}, ${idAlternativa[0]}),
-    (${idUsuario}, ${idAlternativa[1]}),
-    (${idUsuario}, ${idAlternativa[2]});
+    VALUES (${idUsuario}, ${idAlternativa});
     `;
     return database.executar(instrucaoSql, [idUsuario, idAlternativa]);
 

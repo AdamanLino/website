@@ -59,19 +59,28 @@
         </div>
 
         <h3>Loja</h3>
+        <div id="div_alertas"></div>
         <div class="loja">
-            <div onclick="knuckles_hands()" class="knuckles_hands">
+            <div onclick="knuckles_hands()" class="item-jogo">
+                <img src="assets/imgs/knukles-hands.png" alt="knuckles_hands">
                 Mãos do Knuckles - 10 Anéis<br>
                 0.2 Anéis Por Segundo
             </div>
 
-            <div onclick="chao_garden()" class="chao_garden">
+            <div onclick="chao_garden()" class="item-jogo">
+                <img src="assets/imgs/chao-garden.jpg" alt="chao-garden">
                 Jardim de Chaos - 100 Anéis<br>
                 0.5 Anéis Por Segundo
             </div>
+
+            <div onclick="metal_sonic_factory()" class="item-jogo">
+                <img src="assets/imgs/fabrica-metal.png" alt="fabrica-metal">
+                Fábrica do Metal Sonic - 200 Anéis<br>
+                2 Anéis Por Segundo
+            </div>
+
         </div>
 
-        <div id="div_alertas"></div>
     </div>
 
 </body>
@@ -124,6 +133,14 @@
         atualizarAneisPorSegundo()
     }
 
+    function metal_sonic_factory() {
+        if (rings >= 200) {
+            rings -= 200;
+            ringsPorSegundo += 2;
+        } else {
+            div_alertas.innerHTML = `Dinheiro Insuficiente`
+        }
+    }
     function atualizar() {
         rings += ringsPorSegundo;
         atualizarContador();

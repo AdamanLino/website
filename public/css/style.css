@@ -83,6 +83,7 @@ body {
 
 .texto-container {
     background-image: url(../assets/imgs/background-text.jpg);
+    background-attachment: fixed;
 }
 
 .texto {
@@ -481,7 +482,7 @@ button {
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: #01183a;
     color: white;
 }
@@ -497,18 +498,27 @@ button {
 
 .loja {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 700px;
-    height: 90px;
+    height: 250px;
+    text-align: center;
     justify-content: space-around;
-    background-color: red;
 }
 
-.loja .knuckles_hands {
+.item-jogo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 10px;
     background-color: green;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
-.loja .chao_garden {
-    background-color: green;
-    cursor: pointer;
+.item-jogo img {
+    height: 150px;
+    width: 150px;
 }

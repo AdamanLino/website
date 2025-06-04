@@ -179,6 +179,23 @@ LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
 WHERE a.fkenquete = 2
 GROUP BY a.id, a.texto;
 
+select * from usuario;
+SELECT 
+    e.id AS enquete_id,
+    e.pergunta AS pergunta,
+    a.texto AS alternativa,
+    COUNT(ue.fkusuario) AS total_votos
+FROM 
+    enquete e
+LEFT JOIN 
+    alternativa a ON e.id = a.fkenquete
+LEFT JOIN 
+    usuarioEnquete ue ON a.id = ue.fkalternativa
+WHERE 
+    e.id = 1
+GROUP BY 
+    e.id, e.pergunta, a.id, a.texto;
+
 -- TESTES
 -- Votos dos usuários na enquete 2
 INSERT INTO usuarioEnquete (fkusuario, fkalternativa) VALUES
