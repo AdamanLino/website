@@ -355,9 +355,14 @@ body {
     height: auto;
     background-color: #01183a;
     color: white;
+
 }
 
 #pontuacaoEJogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     background-color: #01183a;
     border-radius: 15px;
     color: white;
@@ -412,6 +417,16 @@ button {
 
 .text-new-gray {
     color: var(--new-gray);
+}
+
+/* GRÁFICO DO QUESTIONÁRIO */
+.grafico-do-forum {
+    display: none;
+    /* width: 100%; */
+    height: 400px;
+    background-color: #01183a;
+    align-self: center;
+    justify-self: center;
 }
 
 /* TELA DE RESPOSTAS */

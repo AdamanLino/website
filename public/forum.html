@@ -9,6 +9,7 @@
     <title>Fórum</title>
     <link rel="stylesheet" href="./css/style.css" />
     <script src="./js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- <script src="./js/alerta.js"></script> -->
 </head>
 
@@ -69,7 +70,8 @@
         </div>
         <div class="container-questionario">
             <div id="pontuacaoEJogo">
-                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+                <p>Queremos saber a sua opinião sobre a moderação. Responda ao questionário abaixo.</p>
+                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUESTIONÁRIO</button>
 
                 <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
                     <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
@@ -115,13 +117,17 @@
 
                     <div id="botoes" class="flex-colunar padding-8">
                         <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                        <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                        <button onclick="avancar()" id="btnProx" disabled>Finalizar</button>
                         <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
                     </div>
 
                 </div>
             </div>
+            <div id="grafico-quiz" class="grafico-do-forum">
+                <canvas id="graficoPizzaQuestionario"></canvas>
+            </div>
         </div>
+
 
         <div class="container-posts">
             <h1>Últimos Posts</h1>
@@ -138,6 +144,7 @@
 
 </html>
 
+<!-- SCRIPT DO FÓRUM -->
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
@@ -455,5 +462,14 @@
 
         btnProx.disabled = true;
         btnSubmeter.disabled = true;
+        exibirGrafico();
     }
+
+    function exibirGrafico() {
+        document.getElementById('grafico-quiz').style.display = "flex"
+        obterDadosPizzaQuestionario();
+    }
+
 </script>
+
+<script src="js/pizzaQuestionario.js"></script>

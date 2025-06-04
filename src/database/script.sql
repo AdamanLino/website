@@ -91,29 +91,13 @@ insert into mensagem (comentario, dtCriacao, fktopico, fkusuario)
 		  ('Super Sonic é mais clássico e fácil de conseguir.', now(), 3, 1);
 
 insert into enquete (pergunta) 
-	values ('Qual a sua fase favorita do Sonic?'),
-		   ('Qual seu personagem preferido da franquia Sonic?'),
-		   ('Qual a sua super forma do Sonic favorita?');
+	values ('O que você está achando da moderação atual?');
 
 insert into alternativa (texto, fkenquete) 
-	values ('Green Hill Zone', 1),
-		   ('Chemical Plant Zone', 1),
-		   ('Sky Sanctuary', 1),
-		   ('Stardust Speedway', 1);
-
-insert into alternativa (texto, fkenquete) 
-	values ('Sonic', 2),
-		   ('Tails', 2),
-		   ('Knuckles', 2),
-		   ('Shadow', 2),
-		   ('Amy', 2),
-		   ('Dr. Eggman', 2);
-
-insert into alternativa (texto, fkenquete) 
-	values ('Super Sonic', 3),
-		   ('Hyper Sonic', 3),
-		   ('Werehog', 3);
-
+	values ('Boa', 1),
+		   ('Ruim', 1),
+		   ('Podia Melhorar', 1),
+		   ('Moderação?', 1);
 
 -- para banir um usuário diretamente do BD
 update usuario set situacao = 'banido' where id = 4;
@@ -172,14 +156,6 @@ FROM mensagem m
 GROUP BY hora;
 
 -- gráfico do total de votos na enquete
-SELECT a.texto,
-	COUNT(ue.fkusuario) AS total_votos
-FROM alternativa a
-LEFT JOIN usuarioEnquete ue ON a.id = ue.fkalternativa
-WHERE a.fkenquete = 2
-GROUP BY a.id, a.texto;
-
-select * from usuario;
 SELECT 
     e.id AS enquete_id,
     e.pergunta AS pergunta,
