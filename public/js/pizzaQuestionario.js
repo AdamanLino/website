@@ -25,8 +25,8 @@ function plotarGraficoPizzaQuestionario(dados) {
     // Inserindo valores recebidos em estrutura para o gráfico
     for (let i = 0; i < dados.length; i++) {
         let registro = dados[i];
-        labels.push(registro.alternativa);  // Usando 'assunto' como label
-        dadosGrafico.push(registro.total_votos);  // Contagem de mensagens
+        labels.push(registro.alternativa);  // Usando alternativa como label
+        dadosGrafico.push(registro.total_votos);  // Contagem de votos
     }
 
     console.log('O gráfico será plotado com os seguintes valores:');

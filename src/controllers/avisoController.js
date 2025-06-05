@@ -127,9 +127,9 @@ function deletar(req, res) {
 }
 
 function listarUsuarios(req, res) {
-    var situacao = req.query.situacao || 'ativo';  // Parâmetro de query 'situacao'
+    var situacao = req.query.situacao || 'ativo';
 
-    usuarioModel.listarUsuarios(situacao)  // Chama o model para pegar os dados
+    usuarioModel.listarUsuarios(situacao)
         .then(resultado => {
             if (resultado.length > 0) {
                 const membros = [];

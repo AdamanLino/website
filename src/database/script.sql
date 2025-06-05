@@ -1,6 +1,5 @@
 -- criação da database
 create database sonicfansite;
-
 use sonicfansite;
 
 -- criação das tabelas
@@ -141,18 +140,20 @@ group by u.nome
 order by total_comentarios desc;
 
 -- grafico de novas postagens
-SELECT t.assunto,
+SELECT 
     DATE_FORMAT(dtCriacao, '%H:00') AS hora,
     COUNT(*) AS total_posts
-FROM topico t
-GROUP BY hora;
+FROM topico
+GROUP BY hora
+ORDER BY hora;
 
 -- gráfico de novas mensagens
-SELECT m.comentario,
+SELECT 
     DATE_FORMAT(dtCriacao, '%H:00') AS hora,
     COUNT(*) AS total_mensagens
 FROM mensagem m
-GROUP BY hora;
+GROUP BY hora
+ORDER BY hora;
 
 -- gráfico do total de votos na enquete
 SELECT 

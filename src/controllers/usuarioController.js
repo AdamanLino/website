@@ -77,7 +77,7 @@ function listarKpi(req, res) {
             const moderadores = [];
 
             resultado.forEach(usuario => {
-                if (usuario.tipo === 'moderador') {
+                if (usuario.tipo == 'moderador') {
                     moderadores.push(usuario.nome);
                 } else if (usuario.situacao !== 'banido') {
                     membros.push(usuario.nome);
