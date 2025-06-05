@@ -24,8 +24,8 @@ function plotarGraficoPizza(dados) {
     // Inserindo valores recebidos em estrutura para o gráfico
     for (let i = 0; i < dados.length; i++) {
         let registro = dados[i];
-        labels.push(registro.assunto);  // Usando 'assunto' como label
-        dadosGrafico.push(registro.total_mensagens);  // Contagem de mensagens
+        labels.push(registro.assunto);  // Passando aqui a label do que você está tentando buscar no select do bd (XXXXX)
+        dadosGrafico.push(registro.total_mensagens);  // Passando aqui os dados que você está tentando buscar no select bd (YYYYY)
     }
 
     console.log('O gráfico será plotado com os seguintes valores:');

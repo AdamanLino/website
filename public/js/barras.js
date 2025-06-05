@@ -24,8 +24,8 @@ function plotarGraficoBarras(dados) {
     // Inserindo valores recebidos em estrutura para o gráfico
     for (let i = 0; i < dados.length; i++) {
         let registro = dados[i];
-        labels.push(registro.nome);  // Passe aqui a label do que você está tentando buscar no select do bd
-        dadosGrafico.push(registro.total_comentarios);  // Passe aqui os dados que você está tentando buscar no select bd
+        labels.push(registro.nome);  // Passando aqui a label do que você está tentando buscar no select do bd
+        dadosGrafico.push(registro.total_comentarios);  // Passando aqui os dados que você está tentando buscar no select bd
     }
 
     console.log('O gráfico será plotado com os seguintes valores:');

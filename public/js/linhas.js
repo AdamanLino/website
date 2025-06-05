@@ -24,8 +24,8 @@ function plotarGraficoLinha(dados) {
     // Inserindo valores recebidos em estrutura para o gráfico
     for (let i = 0; i < dados.length; i++) {
         let registro = dados[i];
-        labels.push(registro.hora);  // Passe aqui a label do que você está tentando buscar no select do bd
-        dadosGrafico.push(registro.total_posts);  // Passe aqui os dados que você está tentando buscar no select bd
+        labels.push(registro.hora);  // Passando aqui a label do que você está tentando buscar no select do bd
+        dadosGrafico.push(registro.total_posts);  // Passando aqui os dados que você está tentando buscar no select bd
     }
 
     console.log('O gráfico será plotado com os seguintes valores:');

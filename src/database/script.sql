@@ -58,15 +58,15 @@ create table alternativa (
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   texto varchar(280),
   fkenquete int,
-  foreign key (fkenquete) references enquete(id)
+  FOREIGN KEY (fkenquete) references enquete(id)
 );
 
 create table usuarioEnquete (
 	fkusuario int NOT NULL,
     fkalternativa int NOT NULL,
     primary key(fkusuario, fkalternativa),
-    foreign key (fkusuario) references usuario(id),
-    foreign key (fkalternativa) references alternativa(id),
+    FOREIGN KEY (fkusuario) references usuario(id),
+    FOREIGN KEY (fkalternativa) references alternativa(id),
     unique (fkusuario, fkalternativa) -- somente um usuario pode votar na enquete
 );
 
@@ -102,7 +102,6 @@ insert into alternativa (texto, fkenquete)
 -- para banir um usuário diretamente do BD
 update usuario set situacao = 'banido' where id = 4;
 
-select * from enquete;
 -- selects
 -- mostra os dados dos usuários e seus cargos
 select * 
@@ -125,7 +124,7 @@ on top.id = men.fktopico;
 -- mostra as enquetes
 select * from enquete;
 
--- selects da dashboard
+-- selects para os gráficos da dashboard
 -- gráfico de total de postagens por tópico
 SELECT t.assunto, count(m.comentario) AS total_mensagens
 FROM topico t
@@ -172,15 +171,15 @@ WHERE
 GROUP BY 
     e.id, e.pergunta, a.id, a.texto;
 
--- TESTES
--- Votos dos usuários na enquete 2
+-- INSERTS PARA POPULAR OS GRÁFICOS
+-- Votos dos usuários na enquete
 INSERT INTO usuarioEnquete (fkusuario, fkalternativa) VALUES
-(1, 5), -- admin vota em Sonic
-(2, 6), -- TailsFan vota em Tails
-(3, 7), -- Gabriel vota em Knuckles
-(4, 5), -- Ana vota em Sonic
-(5, 8), -- Rafael vota em Shadow
-(6, 5); -- SonicN1Fan vota em Sonic
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 1),
+(6, 2);
 
 -- Inserções de mensagens em horários diferentes para popular o gráfico
 INSERT INTO mensagem (comentario, dtCriacao, fktopico, fkusuario) VALUES
@@ -194,7 +193,7 @@ INSERT INTO mensagem (comentario, dtCriacao, fktopico, fkusuario) VALUES
 ('O final do Sonic Adventure é emocionante!', STR_TO_DATE('2025-05-24 13:45:00', '%Y-%m-%d %H:%i:%s'), 2, 4),
 ('Hyper Sonic deveria voltar!', STR_TO_DATE('2025-05-24 14:15:00', '%Y-%m-%d %H:%i:%s'), 3, 2);
 
--- Inserções manuais com horários diferentes
+-- Inserções manuais com horários diferentes para popular o gráfico
 INSERT INTO topico (assunto, comentario, dtCriacao, fkusuario)
 VALUES 
 ('Melhor jogo 2D do Sonic?', 'Sonic CD é muito estiloso.', STR_TO_DATE('2025-05-24 08:15:00', '%Y-%m-%d %H:%i:%s'), 3),
@@ -205,12 +204,3 @@ VALUES
 ('Melhor vilão?', 'O Metal Sonic é o mais icônico.', STR_TO_DATE('2025-05-24 13:20:00', '%Y-%m-%d %H:%i:%s'), 6),
 ('Sonic Frontiers é bom?', 'Gameplay diferente, mas muito bom!', STR_TO_DATE('2025-05-24 13:50:00', '%Y-%m-%d %H:%i:%s'), 1),
 ('Preferem jogos 2D ou 3D?', 'Sinto que o 2D tem mais charme!', STR_TO_DATE('2025-05-24 14:00:00', '%Y-%m-%d %H:%i:%s'), 4);
-/*
-select * from topico;
-select * from mensagem;
-insert into topico(assunto, comentario, fkusuario)
-	values ('Assuntos variados', 'Comentario top', 4);
-
-select * from usuario;
-insert into mensagem (comentario, dtCriacao, fktopico, fkusuario) 
-	values('TESTE DE RESPOSTA', now(), 4, 5);
